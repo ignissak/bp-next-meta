@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  edits     GlossaryEdit[]
+  approvals GlossaryEditApproval[]
+  progress  Progress[]
+}
+
+model Glossary {
+  id Int @id @default(autoincrement())
+
+  term       String
+  definition String @db.Text()
+
+  updatedAt DateTime       @updatedAt
+  createdAt DateTime       @default(now())
+  edits     GlossaryEdit[]
+
+  @@index([term])
+}
+
+model GlossaryEdit {
+  id Int @id @default(autoincrement())
+
+  oldDefinition String @db.Text()
+  newDefinition String @db.Text()
+
+  glossaryId Int
+  glossary   Glossary @relation(fields: [glossaryId], references: [id])
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+
+  approvals GlossaryEditApproval[]
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+model GlossaryEditApproval {
+  id Int @id @default(autoincrement())
+
+  glossaryEditId Int
+  glossaryEdit   GlossaryEdit @relation(fields: [glossaryEditId], references: [id])
+  userId         Int
+  user           User         @relation(fields: [userId], references: [id])
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+model Progress {
+  id Int @id @default(autoincrement())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  courseId String
+  entryId  String
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
