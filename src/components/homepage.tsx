@@ -16,9 +16,7 @@ export default function HomePage() {
   return (
     <>
       <HeroHomepage>
-        <section className="container mx-auto mt-8 opacity-100">
-          <HomepageNavBar />
-        </section>
+        <HomepageNavBar />
         <motion.section
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}

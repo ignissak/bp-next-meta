@@ -41,7 +41,7 @@ export const CourseList = () => {
     },
   ];
   return (
-    <section className="container mx-auto" id="courses">
+    <section className="container mx-auto mb-32" id="courses">
       <motion.h2
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -51,7 +51,7 @@ export const CourseList = () => {
       >
         Courses
       </motion.h2>
-      <section className="flex items-row flex-wrap gap-4 items-center justify-center">
+      <section className="flex items-row flex-wrap gap-4 items-start justify-center">
         {courses.map((course, index) => (
           <CourseCard course={course} index={index} key={index} />
         ))}
