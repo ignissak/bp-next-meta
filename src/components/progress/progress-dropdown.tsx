@@ -53,7 +53,7 @@ const ProgressDropdown = ({
               {course.title} ({percentage}%)
             </div>
           </AccordionTrigger>
-          <AccordionContent className="flex flex-col ml-8 space-y-4">
+          <AccordionContent className="flex flex-col ml-4 md:ml-8 space-y-4">
             {course.chapters.map((chapter, index) => {
               return (
                 <Link

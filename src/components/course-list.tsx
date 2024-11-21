@@ -10,6 +10,7 @@ export const CourseList = () => {
         "Discover the fundamentals of artificial intelligence and its impact on our world.",
       approximateTime: "20 minutes",
       image: "/images/course_img1.jpg",
+      chapters: [],
     },
     {
       title: "Linear regression",
@@ -17,6 +18,7 @@ export const CourseList = () => {
         "Explore how linear regression models find patterns and make predictions in data.",
       approximateTime: "1 hour",
       image: "/images/course_img2.jpg",
+      chapters: [],
     },
     {
       title: "Classification algorithms",
@@ -24,6 +26,7 @@ export const CourseList = () => {
         "Dive into algorithms that categorize data, from logistic regression to support vector machines.",
       approximateTime: "2 hours",
       image: "/images/course_img3.jpg",
+      chapters: [],
     },
     {
       title: "Decision Trees and Random Forests",
@@ -31,6 +34,7 @@ export const CourseList = () => {
         "Understand how decision trees and random forests make complex decisions by splitting data.",
       approximateTime: "2 hours",
       image: "/images/course_img4.jpg",
+      chapters: [],
     },
     {
       title: "Neural Networks and Deep Learning",
@@ -38,6 +42,7 @@ export const CourseList = () => {
         "Uncover the power of neural networks and how they mimic the human brain to learn patterns.",
       approximateTime: "2 hours",
       image: "/images/course_img5.jpg",
+      chapters: [],
     },
   ];
   return (
