@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import { observable } from "@legendapp/state";
 import { observer, useMount } from "@legendapp/state/react";
-import { Menu } from "lucide-react";
+import { IconMenu } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -101,7 +101,7 @@ export const HomepageNavBar = observer(() => {
           disablePreventScroll
         >
           <DrawerTrigger className="md:hidden">
-            <Menu className="text-secondary hover:text-primary transition-colors duration-200" />
+            <IconMenu className="text-secondary hover:text-primary transition-colors duration-200" />
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader className="hidden">

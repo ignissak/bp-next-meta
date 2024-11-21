@@ -1,12 +1,12 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 import { Metadata } from "next";
 import Link from "next/link";
 import { CourseList } from "./course-list";
 import { HeroHomepage } from "./homepage/hero";
 import { Button } from "./ui/button";
+import { IconArrowRight } from "@tabler/icons-react";
 
 export const metadata: Metadata = {
   title: "Learn AI",
@@ -44,7 +44,7 @@ export default function HomePage() {
                 className="font-semibold max-w-64"
               >
                 Browse courses
-                <ArrowRight className="icon-glow" />
+                <IconArrowRight className="icon-glow" />
               </Button>
             </Link>
           </div>
