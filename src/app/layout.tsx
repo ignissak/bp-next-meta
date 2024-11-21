@@ -7,6 +7,9 @@ import "./globals.css";
 const geist = Geist({
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
+  subsets: ["latin"],
+  adjustFontFallback: false,
+  fallback: ["apple-system", "sans-serif"],
 });
 
 export const metadata: Metadata = {
