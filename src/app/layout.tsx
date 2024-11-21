@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { HomepageNavBar } from "@/components/homepage/navbar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -34,6 +35,7 @@ export default function RootLayout({
           forcedTheme="dark"
           disableTransitionOnChange
         >
+          <HomepageNavBar />
           {children}
         </ThemeProvider>
       </body>

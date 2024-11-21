@@ -1,13 +1,15 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { observable } from "@legendapp/state";
-import { observer, useEffectOnce } from "@legendapp/state/react";
+import { observer, useMount } from "@legendapp/state/react";
 import { Menu } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Drawer,
   DrawerContent,
+  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -21,14 +23,19 @@ import {
 } from "../ui/navigation-menu";
 
 const isScrolled$ = observable(false);
+const hash$ = observable("");
 
 export const HomepageNavBar = observer(() => {
-  useEffectOnce(() => {
+  useMount(() => {
+    isScrolled$.set(window.scrollY > 200);
     window.addEventListener("scroll", () => {
-      console.debug(window.scrollY);
       isScrolled$.set(window.scrollY > 200);
     });
-  }, []);
+    hash$.set(window.location.hash);
+  });
+
+  // get link query or path
+  const path = usePathname();
 
   return (
     <motion.section
@@ -42,36 +49,49 @@ export const HomepageNavBar = observer(() => {
       }
     >
       <div className="flex items-center justify-between container my-4 mx-auto relative z-50">
-        <h1 className="font-semibold text-base">Learn AI</h1>
+        <Link
+          href="/"
+          className="font-semibold text-base hover:text-glow transition-all duration-200"
+        >
+          Learn AI
+        </Link>
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Link href="#courses" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Browse courses
-                </NavigationMenuLink>
-              </Link>
+              <NavigationMenuLink
+                href="/#courses"
+                className={navigationMenuTriggerStyle()}
+                active={path === "/" && hash$.get() === "#courses"}
+              >
+                Browse courses
+              </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/glossary" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Glossary
-                </NavigationMenuLink>
-              </Link>
+              <NavigationMenuLink
+                href="/glossary"
+                active={path.startsWith("/glossary")}
+                className={navigationMenuTriggerStyle()}
+              >
+                Glossary
+              </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/progress" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Your progress
-                </NavigationMenuLink>
-              </Link>
+              <NavigationMenuLink
+                href="/progress"
+                active={path.startsWith("/progress")}
+                className={navigationMenuTriggerStyle()}
+              >
+                Your progress
+              </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/account" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Account
-                </NavigationMenuLink>
-              </Link>
+              <NavigationMenuLink
+                href="/account"
+                active={path.startsWith("/account")}
+                className={navigationMenuTriggerStyle()}
+              >
+                Account
+              </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
@@ -80,52 +100,51 @@ export const HomepageNavBar = observer(() => {
           noBodyStyles
           disablePreventScroll
         >
-          {" "}
-          {/* 👈 TODO: (FIX) Closing drawer jumps back to trigger */}
           <DrawerTrigger className="md:hidden">
             <Menu className="text-secondary hover:text-primary transition-colors duration-200" />
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader className="hidden">
               <DrawerTitle></DrawerTitle>
+              <DrawerDescription></DrawerDescription>
             </DrawerHeader>
-            <NavigationMenu className="p-6 overflow-auto">
+            <NavigationMenu className="p-6 mb-4 overflow-auto">
               <NavigationMenuList className="flex-col items-start space-x-0 space-y-0">
                 <NavigationMenuItem>
-                  <Link href="/#courses" legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={cn(navigationMenuTriggerStyle(), "text-xl")}
-                    >
-                      Browse courses
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuLink
+                    href="/#courses"
+                    className={navigationMenuTriggerStyle()}
+                    active={path === "/" && hash$.get() === "#courses"}
+                  >
+                    Browse courses
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/glossary" legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={cn(navigationMenuTriggerStyle(), "text-xl")}
-                    >
-                      Glossary
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuLink
+                    href="/glossary"
+                    className={navigationMenuTriggerStyle()}
+                    active={path.startsWith("/glossary")}
+                  >
+                    Glossary
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/progress" legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={cn(navigationMenuTriggerStyle(), "text-xl")}
-                    >
-                      Your progress
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuLink
+                    href="/progress"
+                    className={navigationMenuTriggerStyle()}
+                    active={path.startsWith("/progress")}
+                  >
+                    Your progress
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/account" legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={cn(navigationMenuTriggerStyle(), "text-xl")}
-                    >
-                      Account
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuLink
+                    href="/account"
+                    className={navigationMenuTriggerStyle()}
+                    active={path.startsWith("/account")}
+                  >
+                    Account
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>

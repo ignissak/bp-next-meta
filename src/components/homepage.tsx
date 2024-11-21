@@ -3,9 +3,9 @@
 import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 import { Metadata } from "next";
+import Link from "next/link";
 import { CourseList } from "./course-list";
 import { HeroHomepage } from "./homepage/hero";
-import { HomepageNavBar } from "./homepage/navbar";
 import { Button } from "./ui/button";
 
 export const metadata: Metadata = {
@@ -14,9 +14,8 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <>
+    <main className="scroll-smooth">
       <HeroHomepage>
-        <HomepageNavBar />
         <motion.section
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -29,16 +28,31 @@ export default function HomePage() {
               Unleash the power of AI—learn, code, and master machine learning
               hands-on.
             </h1>
-            <Button variant={"blue-primary"} className="font-semibold max-w-64">
-              Browse courses
-              <ArrowRight className="icon-glow" />
-            </Button>
+            <Link
+              href="#courses"
+              scroll={false}
+              onClick={(e) => {
+                e.preventDefault();
+                // TODO: Fix smooth scroll
+                document
+                  .querySelector("#courses")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              <Button
+                variant={"blue-primary"}
+                className="font-semibold max-w-64"
+              >
+                Browse courses
+                <ArrowRight className="icon-glow" />
+              </Button>
+            </Link>
           </div>
         </motion.section>
       </HeroHomepage>
       <section className="">
         <CourseList />
       </section>
-    </>
+    </main>
   );
 }
