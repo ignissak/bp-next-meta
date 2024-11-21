@@ -24,7 +24,7 @@ export default function HomePage() {
           className="flex items-center justify-start container mx-auto flex-grow mb-20"
         >
           <div className="flex flex-col gap-4">
-            <h1 className="font-bold text-4xl text-glow max-w-[36rem]">
+            <h1 className="font-bold text-2xl md:text-4xl text-glow max-w-[36rem]">
               Unleash the power of AI—learn, code, and master machine learning
               hands-on.
             </h1>
