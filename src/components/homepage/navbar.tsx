@@ -27,9 +27,9 @@ const hash$ = observable("");
 
 export const HomepageNavBar = observer(() => {
   useMount(() => {
-    isScrolled$.set(window.scrollY > 200);
+    isScrolled$.set(window.scrollY > 100);
     window.addEventListener("scroll", () => {
-      isScrolled$.set(window.scrollY > 200);
+      isScrolled$.set(window.scrollY > 100);
     });
     hash$.set(window.location.hash);
   });
