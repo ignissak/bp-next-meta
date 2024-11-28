@@ -6,9 +6,9 @@ import {
   qsEntriesInCourse,
 } from "./lib/query";
 
-export const getCoursesWithChapters = () => {
-  return fetch(
-    process.env.STRAPI_BASE_URL + "/api/courses" + qsCoursesWithChapters(),
+export const getCoursesWithChapters = async () => {
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_STRAPI_BASE_URL + "/api/courses?" + qsCoursesWithChapters(),
     {
       method: "GET",
       headers: {
@@ -17,13 +17,18 @@ export const getCoursesWithChapters = () => {
       },
     }
   );
+  if (!response.ok) {
+    throw new Error("Failed to fetch courses");
+  }
+  return await response.json();
 };
 
-export const getEntryInCourse = (entryId: string) => {
-  return fetch(
-    process.env.STRAPI_BASE_URL +
+export const getEntryInCourse = async (entryId: string) => {
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
       "/api/course-chapter-entries/" +
       entryId +
+      "?" +
       qsChapterEntry(),
     {
       method: "GET",
@@ -33,13 +38,15 @@ export const getEntryInCourse = (entryId: string) => {
       },
     }
   );
+  return await response.json();
 };
 
-export const getAllEntriesInCourse = (courseId: string) => {
-  return fetch(
-    process.env.STRAPI_BASE_URL +
+export const getAllEntriesInCourse = async (courseId: string) => {
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
       "/api/courses/" +
       courseId +
+      "?" +
       qsEntriesInCourse(),
     {
       method: "GET",
@@ -49,4 +56,5 @@ export const getAllEntriesInCourse = (courseId: string) => {
       },
     }
   );
+  return await response.json();
 };

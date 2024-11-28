@@ -11,3 +11,5 @@ export const snakeCase = (input: string) => {
     .map((word) => word.toLowerCase())
     .join('_');
 };
+
+const fetcher = (...args: [RequestInfo, RequestInit?]) => fetch(...args).then(res => res.json())
