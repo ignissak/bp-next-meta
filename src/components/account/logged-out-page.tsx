@@ -20,7 +20,7 @@ const LoggedOutPage = () => {
           variant={"blue-primary"}
           className="font-semibold w-full"
           onClick={() => {
-            signIn("auth0");
+            signIn("github");
           }}
         >
           <IconBrandGithub className="icon-glow" />
