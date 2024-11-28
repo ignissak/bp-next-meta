@@ -4,6 +4,7 @@ import { observable } from "@legendapp/state";
 import { observer, useMount } from "@legendapp/state/react";
 import { IconMenu } from "@tabler/icons-react";
 import { motion } from "motion/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -36,6 +37,7 @@ export const HomepageNavBar = observer(() => {
 
   // get link query or path
   const path = usePathname();
+  const { data: session } = useSession();
 
   return (
     <motion.section
@@ -53,7 +55,7 @@ export const HomepageNavBar = observer(() => {
           href="/"
           className="font-semibold text-base hover:text-glow transition-all duration-200"
         >
-          Learn AI
+          Learn AI {session && session.user?.name}
         </Link>
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>

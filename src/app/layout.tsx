@@ -1,6 +1,7 @@
 import { HomepageNavBar } from "@/components/homepage/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import { Geist } from "next/font/google";
 import "./globals.css";
 
@@ -25,14 +26,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="min-h-screen">
       <body className={`${geist.className} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          forcedTheme="dark"
-          disableTransitionOnChange
-        >
-          <HomepageNavBar />
-          {children}
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider
+            attribute="class"
+            forcedTheme="dark"
+            disableTransitionOnChange
+          >
+            <HomepageNavBar />
+            {children}
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );
