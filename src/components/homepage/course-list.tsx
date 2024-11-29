@@ -1,13 +1,8 @@
 import { getCoursesWithChapters } from "@/actions";
 import { Course } from "@/lib/types";
-import { observable } from "@legendapp/state";
-import { observer, useMount } from "@legendapp/state/react";
+import { observer, useMountOnce, useObservable } from "@legendapp/state/react";
 import { CourseCard } from "../course_list/course-card";
 import CourseListHeading from "./course-list-heading";
-
-const courses$ = observable<Course[]>([]);
-const loading$ = observable(true);
-const errored$ = observable(false);
 
 const CourseList = observer(() => {
   /* const courses: Course[] = [
@@ -53,7 +48,11 @@ const CourseList = observer(() => {
     },
   ]; */
 
-  useMount(async () => {
+  const courses$ = useObservable<Course[]>([]);
+  const loading$ = useObservable(true);
+  const errored$ = useObservable(false);
+
+  useMountOnce(async () => {
     try {
       const jsonResponse = await getCoursesWithChapters();
       for (const document of jsonResponse.data) {
