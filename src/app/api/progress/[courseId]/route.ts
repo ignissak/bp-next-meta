@@ -1,0 +1,18 @@
+import { auth } from "@/auth";
+import prisma from "@/lib/prisma";
+import { NextResponse } from "next/server";
+
+export const GET = auth(async function GET(request, { params }) {
+  if (!request.auth)
+    return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
+
+  const courseId = params?.courseId as string;
+  const progress = prisma.progress.findMany({
+    where: {
+      userId: request.auth.user?.id,
+      courseId: courseId,
+    },
+  });
+
+  return NextResponse.json({ progress });
+});
