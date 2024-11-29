@@ -6,7 +6,7 @@ export const GET = auth(async function GET(request, { params }) {
   if (!request.auth)
     return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
 
-  const courseId = (await params)!!.courseId as string;
+  const courseId = (await params)?.courseId as string;
   const progress = prisma.progress.findMany({
     where: {
       userId: request.auth.user?.id,

@@ -3,8 +3,9 @@ import { Course } from "@/lib/types";
 
 export const metadata = {
   title: "Your progress",
-  description: "Track your course progress and resume on specific parts of the course by clicking on their title.",
-}
+  description:
+    "Track your course progress and resume on specific parts of the course by clicking on their title.",
+};
 
 const page = () => {
   const courses: Partial<Course>[] = [

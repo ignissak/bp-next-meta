@@ -1,6 +1,7 @@
 "use client";
 import { Course } from "@/lib/types";
 import { IconCircleCheckFilled, IconCircleDotted } from "@tabler/icons-react";
+import { motion } from "motion/react";
 import Link from "next/link";
 import {
   Accordion,
@@ -8,7 +9,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
-import { motion } from "motion/react";
 
 const ProgressDropdown = ({
   course,
@@ -40,7 +40,7 @@ const ProgressDropdown = ({
       <Accordion
         type="single"
         collapsible
-        className="w-full bg-card px-4 rounded-md"
+        className="w-full bg-card px-4 rounded-lg"
       >
         <AccordionItem value={course.title}>
           <AccordionTrigger>
