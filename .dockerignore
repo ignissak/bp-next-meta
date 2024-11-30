@@ -1,0 +1,8 @@
+.env
+node_modules/
+.dockerignore
+Dockerfile
+README.md
+.next/
+docker
+.git/

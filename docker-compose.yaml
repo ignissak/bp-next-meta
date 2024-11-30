@@ -9,6 +9,12 @@ services:
       - POSTGRES_DB=mydb
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  next-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
 
 volumes:
   postgres_data:
