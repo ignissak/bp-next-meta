@@ -37,6 +37,7 @@ export const HeroHomepage = () => {
           <Link
             href="#courses"
             scroll={false}
+            className="max-w-64"
             onClick={(e) => {
               e.preventDefault();
               // TODO: Fix smooth scroll
@@ -45,7 +46,7 @@ export const HeroHomepage = () => {
                 ?.scrollIntoView({ behavior: "smooth" });
             }}
           >
-            <Button variant={"blue-primary"} className="font-semibold max-w-64">
+            <Button variant={"blue-primary"} className="font-semibold w-full">
               Browse courses
               <IconArrowRight className="icon-glow" />
             </Button>
