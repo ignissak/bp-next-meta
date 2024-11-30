@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Geist } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 const geist = Geist({
   weight: ["300", "400", "500", "600", "700"],
@@ -34,6 +35,7 @@ export default function RootLayout({
           >
             <HomepageNavBar />
             {children}
+            <Toaster />
           </ThemeProvider>
         </SessionProvider>
       </body>
