@@ -36,6 +36,9 @@ body {
     --secondary: 0 0% 83%;
     --radius: 0.5rem;
 
+    --gradient-red-alert: linear-gradient(90deg, rgba(69, 10, 10, 0.35) 40%, rgba(69, 10, 10, 0.00) 100%), rgba(23, 23, 23, 0.00);
+    --gradient-blue-alert: linear-gradient(90deg, rgba(23, 37, 84, 0.35) 40%, rgba(23, 37, 84, 0.00) 100%), rgba(23, 23, 23, 0.00)
+
     --secondary-glow: conic-gradient(
       from 10deg at 50% 50%,
       #eb7494 0deg,
@@ -62,6 +65,15 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+  .container {
+    @apply px-8 md:px-0;
+  }
+  .alert-red {
+    background: var(--gradient-red-alert);
+  }
+  .alert-blue {
+    background: var(--gradient-blue-alert);
   }
   /* body::before,
   body::after {

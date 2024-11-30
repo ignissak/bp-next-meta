@@ -27,25 +27,25 @@ const CourseChapterEntry: React.FC<CourseChapterEntryProps> = ({
       <div
         data-active={active}
         className={cn(
-          "inline-flex items-center gap-2 py-1 pl-6 pr-8 data-[active=true]:bg-border/40 rounded-tr-lg rounded-br-lg group transition-opacity",
+          "inline-flex items-center gap-2 py-1 pl-6 pr-2 data-[active=true]:bg-border/40 data-[active]:w-full rounded-tr-lg rounded-br-lg group transition-opacity",
           className
         )}
       >
         {type === "study" && (
           <IconAlignJustified
-            className="group-hover:opacity-80 transition-opacity"
+            className="group-hover:opacity-80 transition-opacity flex-shrink-0 flex-grow-0"
             size={16}
           />
         )}
         {type === "code" && (
           <IconCode
-            className="group-hover:opacity-80 transition-opacity"
+            className="group-hover:opacity-80 transition-opacity flex-shrink-0 flex-grow-0"
             size={16}
           />
         )}
         {type === "quiz" && (
           <IconCopyCheckFilled
-            className="group-hover:opacity-80 transition-opacity"
+            className="group-hover:opacity-80 transition-opacity flex-shrink-0 flex-grow-0"
             size={16}
           />
         )}
