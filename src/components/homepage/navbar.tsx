@@ -58,40 +58,44 @@ export const HomepageNavBar = observer(() => {
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuLink
-                href="/#courses"
-                className={navigationMenuTriggerStyle()}
-                active={path === "/" && hash$.get() === "#courses"}
-              >
-                Browse courses
-              </NavigationMenuLink>
+              <Link href="/#courses" passHref legacyBehavior>
+                <NavigationMenuLink
+                  className={navigationMenuTriggerStyle()}
+                  active={path === "/" && hash$.get() === "#courses"}
+                >
+                  Browse courses
+                </NavigationMenuLink>
+              </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink
-                href="/glossary"
-                active={path.startsWith("/glossary")}
-                className={navigationMenuTriggerStyle()}
-              >
-                Glossary
-              </NavigationMenuLink>
+              <Link href="/glossary" passHref legacyBehavior>
+                <NavigationMenuLink
+                  className={navigationMenuTriggerStyle()}
+                  active={path.startsWith("/glossary")}
+                >
+                  Glossary
+                </NavigationMenuLink>
+              </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink
-                href="/progress"
-                active={path.startsWith("/progress")}
-                className={navigationMenuTriggerStyle()}
-              >
-                Your progress
-              </NavigationMenuLink>
+              <Link href="/progress" passHref legacyBehavior>
+                <NavigationMenuLink
+                  className={navigationMenuTriggerStyle()}
+                  active={path.startsWith("/progress")}
+                >
+                  Your progress
+                </NavigationMenuLink>
+              </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink
-                href="/account"
-                active={path.startsWith("/account")}
-                className={navigationMenuTriggerStyle()}
-              >
-                Account
-              </NavigationMenuLink>
+              <Link href="/account" passHref legacyBehavior>
+                <NavigationMenuLink
+                  className={navigationMenuTriggerStyle()}
+                  active={path.startsWith("/account")}
+                >
+                  Account
+                </NavigationMenuLink>
+              </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
