@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export const GET = auth(function GET(request) {
+export const GET = auth(async (request) => {
   if (!request.auth)
     return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
 
@@ -13,4 +13,4 @@ export const GET = auth(function GET(request) {
   });
 
   return NextResponse.json({ progress });
-});
+}) as any;
