@@ -1,14 +1,21 @@
 import Alert from "@/components/ui/alert";
 import CourseChapterNav from "@/components/ui/course-chapter-nav";
-import { IconChecks } from "@tabler/icons-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { IconAlignLeft2, IconChecks } from "@tabler/icons-react";
 
 const LearnPage = () => {
   return (
     <main className="container mx-auto min-h-screen">
-      <section className="pt-16 md:pt-32 pb-8 flex gap-8">
+      <section className="pt-16 md:pt-32 pb-8 flex flex-col lg:flex-row gap-8">
         <aside className="max-w-80 w-full">
           <h2 className="text-lg font-semibold">Introduction to AI</h2>
-          <section id="course-nav">
+          <section id="course-nav" className="hidden lg:block">
             <CourseChapterNav
               chapterTitle="Overview"
               chapters={[
@@ -49,6 +56,58 @@ const LearnPage = () => {
               ]}
             />
           </section>
+          <Sheet>
+            <SheetTrigger className="lg:hidden mt-4 flex items-center gap-2 text-primary hover:text-secondary transition-colors duration-200">
+              <IconAlignLeft2 />
+              <span className="font-medium">Browse content</span>
+            </SheetTrigger>
+            <SheetContent side="left">
+              <SheetHeader>
+                <SheetTitle className="text-left">Introduction to AI</SheetTitle>
+              </SheetHeader>
+              <div>
+                <CourseChapterNav
+                  chapterTitle="Overview"
+                  chapters={[
+                    {
+                      title: "Introduction to Artificial Intelligence",
+                      type: "study",
+                      active: true,
+                      link: "#",
+                    },
+                  ]}
+                />
+                <CourseChapterNav
+                  chapterTitle="Introduction to Machine Learning"
+                  chapters={[
+                    {
+                      title: "What is Machine Learning?",
+                      type: "study",
+                      active: false,
+                      link: "#",
+                    },
+                    {
+                      title: "Supervised learning",
+                      type: "study",
+                      active: false,
+                      link: "#",
+                    },
+                  ]}
+                />
+                <CourseChapterNav
+                  chapterTitle="Conclusion"
+                  chapters={[
+                    {
+                      title: "Test your understanding",
+                      type: "quiz",
+                      active: false,
+                      link: "#",
+                    },
+                  ]}
+                />
+              </div>
+            </SheetContent>
+          </Sheet>
         </aside>
         <section id="course-content" className="">
           <h2 className="text-lg font-semibold mb-4">

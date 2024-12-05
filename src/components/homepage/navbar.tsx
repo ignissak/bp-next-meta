@@ -105,7 +105,7 @@ export const HomepageNavBar = observer(() => {
           disablePreventScroll
         >
           <DrawerTrigger className="md:hidden">
-            <IconMenu className="text-secondary hover:text-primary transition-colors duration-200" />
+            <IconMenu className="text-primary hover:text-secondary transition-colors duration-200" />
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader className="hidden">

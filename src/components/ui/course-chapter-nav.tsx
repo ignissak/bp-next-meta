@@ -29,7 +29,7 @@ const CourseChapterNav: React.FC<CourseChapterNavProps> = ({
       className="[&:not(:last-child)]:border-b pb-2 border-muted"
     >
       <AccordionItem value="item">
-        <AccordionTrigger className="flex-row-reverse justify-end gap-2 pb-2">
+        <AccordionTrigger className="flex-row-reverse justify-end gap-2 pb-2 text-base">
           {chapterTitle}
         </AccordionTrigger>
         <AccordionContent>
