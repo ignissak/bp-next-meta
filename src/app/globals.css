@@ -36,8 +36,23 @@ body {
     --secondary: 0 0% 83%;
     --radius: 0.5rem;
 
-    --gradient-red-alert: linear-gradient(90deg, rgba(69, 10, 10, 0.35) 40%, rgba(69, 10, 10, 0.00) 100%), rgba(23, 23, 23, 0.00);
-    --gradient-blue-alert: linear-gradient(90deg, rgba(23, 37, 84, 0.35) 40%, rgba(23, 37, 84, 0.00) 100%), rgba(23, 23, 23, 0.00)
+    --gradient-red: linear-gradient(
+        90deg,
+        rgba(69, 10, 10, 0.35) 40%,
+        rgba(69, 10, 10, 0) 100%
+      ),
+      rgba(23, 23, 23, 0);
+    --gradient-blue: linear-gradient(
+        90deg,
+        rgba(23, 37, 84, 0.35) 40%,
+        rgba(23, 37, 84, 0) 100%
+      ),
+      rgba(23, 23, 23, 0);
+    --gradient-green: linear-gradient(
+      90deg,
+      rgba(20, 83, 45, 0.35) 40%,
+      rgba(20, 83, 45, 0) 100%
+    );
 
     --secondary-glow: conic-gradient(
       from 10deg at 50% 50%,
@@ -69,11 +84,14 @@ body {
   .container {
     @apply px-8 md:px-0;
   }
-  .alert-red {
-    background: var(--gradient-red-alert);
+  .bg-gradient-red {
+    background: var(--gradient-red);
   }
-  .alert-blue {
-    background: var(--gradient-blue-alert);
+  .bg-gradient-blue {
+    background: var(--gradient-blue);
+  }
+  .bg-gradient-green {
+    background: var(--gradient-green);
   }
   /* body::before,
   body::after {

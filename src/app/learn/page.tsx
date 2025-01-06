@@ -1,3 +1,5 @@
+"use client";
+import Quiz from "@/components/quiz";
 import Alert from "@/components/ui/alert";
 import CourseChapterNav from "@/components/ui/course-chapter-nav";
 import {
@@ -7,9 +9,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { observer } from "@legendapp/state/react";
 import { IconAlignLeft2, IconChecks } from "@tabler/icons-react";
 
-const LearnPage = () => {
+const LearnPage = observer(() => {
   return (
     <main className="container mx-auto min-h-screen">
       <section className="pt-16 md:pt-32 pb-8 flex flex-col lg:flex-row gap-8">
@@ -63,7 +66,9 @@ const LearnPage = () => {
             </SheetTrigger>
             <SheetContent side="left">
               <SheetHeader>
-                <SheetTitle className="text-left">Introduction to AI</SheetTitle>
+                <SheetTitle className="text-left">
+                  Introduction to AI
+                </SheetTitle>
               </SheetHeader>
               <div>
                 <CourseChapterNav
@@ -142,10 +147,33 @@ const LearnPage = () => {
               </p>
             </Alert.Content>
           </Alert>
+          <Quiz
+            title="What parts of the linear regression equation are updated during training?"
+            subtitle="Velit ut enim ad qui sit Lorem non elit occaecat deserunt Lorem. Deserunt enim nostrud cillum labore enim deserunt esse in deserunt labore labore anim."
+            options={{
+              "1": {
+                value: "Logarithmic",
+                correct: false,
+              },
+              "2": {
+                value: "Exponential",
+                correct: false,
+              },
+              "3": {
+                value: "Quadratic",
+                correct: false,
+              },
+              "4": {
+                value: "Linear",
+                correct: true,
+              },
+            }}
+            type="abcd"
+          />
         </section>
       </section>
     </main>
   );
-};
+});
 
 export default LearnPage;

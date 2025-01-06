@@ -21,8 +21,8 @@ interface AlertContentProps {
 const alertVariants = cva("px-6 py-4 flex flex-col md:flex-row items-start gap-4 rounded-lg my-4", {
   variants: {
     variant: {
-      red: "alert-red text-red-100",
-      blue: "alert-blue text-blue-100",
+      red: "bg-gradient-red text-red-100",
+      blue: "bg-gradient-blue text-blue-100",
     },
   },
 });

@@ -12,3 +12,18 @@ export interface CourseChapter {
   title: string;
   completed?: boolean;
 }
+
+export interface QuizOptions {
+  [key: string]: {
+    value: string;
+    correct: boolean;
+  };
+}
+
+export interface IQuiz {
+  id?: number;
+  title: string;
+  subtitle?: string;
+  options: QuizOptions;
+  type: "abcd" | "fill";
+}
