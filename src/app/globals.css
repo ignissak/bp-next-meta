@@ -93,6 +93,10 @@ body {
   .bg-gradient-green {
     background: var(--gradient-green);
   }
+  .navbar-selected {
+    margin-left: calc((100vw - 100%)/ -2) ;
+    margin-right: calc((100vw - 100%)/ -2);
+  }
   /* body::before,
   body::after {
     content: "";

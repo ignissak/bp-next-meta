@@ -1,5 +1,5 @@
-import { getCoursesWithChapters } from "@/actions";
 import { useToast } from "@/hooks/use-toast";
+import { store$ } from "@/lib/store";
 import { Course } from "@/lib/types";
 import { observer, useMountOnce, useObservable } from "@legendapp/state/react";
 import { CourseCard } from "../course_list/course-card";
@@ -18,19 +18,7 @@ const CourseList = observer(() => {
       courses$.set([]);
       loading$.set(true);
       errored$.set(false);
-      const jsonResponse = await getCoursesWithChapters();
-      for (const document of jsonResponse.data) {
-        const course = {
-          id: document.documentId,
-          title: document.title,
-          description: document.description,
-          approximateTime: document.estimateTime,
-          image: process.env.NEXT_PUBLIC_STRAPI_BASE_URL + document.cover?.url,
-          chapters: [],
-        };
-        courses$.push(course);
-        console.log(course);
-      }
+      courses$.set(store$.getCourses.get());
       loading$.set(false);
     } catch (e) {
       console.error(e);

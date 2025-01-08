@@ -14,7 +14,7 @@ import { IconAlignLeft2, IconChecks } from "@tabler/icons-react";
 
 const LearnPage = observer(() => {
   return (
-    <main className="container mx-auto min-h-screen">
+    <main className="container relative mx-auto min-h-screen">
       <section className="pt-16 md:pt-32 pb-8 flex flex-col lg:flex-row gap-8">
         <aside className="max-w-80 w-full">
           <h2 className="text-lg font-semibold">Introduction to AI</h2>

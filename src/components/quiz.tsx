@@ -26,9 +26,9 @@ const Quiz: React.FC<IQuiz> = observer(
           <section
             key={key}
             className={cn(
-              "border border-card px-5 py-4 flex items-center justify-between cursor-pointer hover:opacity-80 transition-all duration-200 last:rounded-bl-lg last:rounded-br-lg",
-              clickedOptions$.get().includes(key) &&
-                (value.correct ? "bg-gradient-green" : "bg-gradient-red")
+              "border border-card px-5 py-4 flex items-center justify-between transition-all duration-200 last:rounded-bl-lg last:rounded-br-lg",
+              clickedOptions$.get().includes(key) ?
+                (value.correct ? "bg-gradient-green" : "bg-gradient-red") : "cursor-pointer hover:opacity-80"
             )}
             onClick={() => {
               handleClickOption(key);

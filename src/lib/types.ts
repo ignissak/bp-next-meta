@@ -1,15 +1,18 @@
 export interface Course {
-  id?: string;
+  documentId?: string;
   title: string;
   description: string;
   approximateTime: string;
   image: string;
   link?: string;
   chapters: CourseChapter[];
+  completed?: boolean;
 }
 
 export interface CourseChapter {
+  documentId: string;
   title: string;
+  slug: string;
   completed?: boolean;
 }
 
