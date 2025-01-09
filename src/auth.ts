@@ -13,5 +13,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     authorized: async (user) => {
       return !!user;
     },
+    session: async ({ session, token, user }) => {
+      const userRecord = await prisma.user.findUnique({
+        where: {
+          email: session.user.email,
+        },
+      });
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: userRecord?.id || undefined,
+        },
+      };
+    },
   },
 });

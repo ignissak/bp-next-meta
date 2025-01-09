@@ -1,5 +1,5 @@
+import { getCoursesWithChapters } from "@/actions";
 import { useToast } from "@/hooks/use-toast";
-import { store$ } from "@/lib/store";
 import { Course } from "@/lib/types";
 import { observer, useMountOnce, useObservable } from "@legendapp/state/react";
 import { CourseCard } from "../course_list/course-card";
@@ -14,11 +14,10 @@ const CourseList = observer(() => {
 
   const loadCourseList = async () => {
     try {
-      console.log("Loading course list...");
       courses$.set([]);
       loading$.set(true);
       errored$.set(false);
-      courses$.set(store$.getCourses.get());
+      courses$.set(await getCoursesWithChapters());
       loading$.set(false);
     } catch (e) {
       console.error(e);
