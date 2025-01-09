@@ -16,6 +16,9 @@ export const qsCoursesWithChapters = () => {
       course_chapters: {
         populate: "*",
       },
+      cover: {
+        populate: "*",
+      },
     },
     sort: "course_order:asc",
   });
