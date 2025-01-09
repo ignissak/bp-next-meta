@@ -6,7 +6,7 @@ import {
   qsCoursesWithChapters,
   qsEntriesInCourse,
 } from "./lib/query";
-import { Course, CourseChapter } from "./lib/types";
+import { Course, CourseChapter, CourseChapterEntry } from "./lib/types";
 
 export const _getCoursesWithChapters = async () => {
   const response = await fetch(
@@ -41,11 +41,22 @@ export const getCoursesWithChapters = async () => {
     };
     courses.push(course);
     for (const chapter of document.course_chapters) {
-      course.chapters.push({
+      let chapterObj: CourseChapter = {
         documentId: chapter.documentId,
         title: chapter.title,
         slug: chapter.slug,
-      });
+        course_chapter_entries: [] as CourseChapterEntry[],
+      };
+      for (const chapterEntry of chapter.course_chapter_entries) {
+        chapterObj.course_chapter_entries?.push({
+          documentId: chapterEntry.documentId,
+          title: chapterEntry.title,
+          slug: chapterEntry.slug,
+          type: chapterEntry.type,
+          completed: false,
+        });
+      }
+      course.chapters.push(chapterObj);
     }
   }
   return courses;

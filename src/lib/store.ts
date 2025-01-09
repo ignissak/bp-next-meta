@@ -9,7 +9,6 @@ import { Progress } from "@prisma/client";
 export const store$ = observable({
   progress: [] as Partial<Progress>[],
   setProgress: async (courseId: string, entryId: string, userId?: string) => {
-    // TODO: Implement
     if (!userId) {
       console.debug("No user, setting progress locally...");
       store$.progress.set([...store$.progress.get(), { courseId, entryId }]);
@@ -17,6 +16,15 @@ export const store$ = observable({
     }
     console.debug("Setting progress in database...");
     await upsertUserProgress(userId, courseId, entryId);
+  },
+  deleteLocalProgress: async (courseId: string, entryId: string) => {
+    console.debug("No user, deleting progress locally...");
+    store$.progress.set(
+      store$.progress
+        .get()
+        .filter((p) => p.courseId !== courseId || p.entryId !== entryId)
+    );
+    return;
   },
 });
 

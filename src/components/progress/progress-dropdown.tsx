@@ -1,5 +1,6 @@
 "use client";
 import { Course } from "@/lib/types";
+import { isNaNor } from "@/lib/utils";
 import { Observable } from "@legendapp/state";
 import { observer, useObservable, useObserve } from "@legendapp/state/react";
 import { IconCircleCheckFilled, IconCircleDotted } from "@tabler/icons-react";
@@ -22,20 +23,22 @@ const ProgressDropdown = observer(
   }) => {
     if (!course.title || !course.chapters) return <></>;
 
-    let completedChapters = useObservable(0);
+    let completedEntries = useObservable(0);
     let isCompleted = useObservable(false);
     let percentage = useObservable(0);
     useObserve(() => {
-      completedChapters.set(
-        course.chapters.filter((chapter) => chapter.completed.get()).length
+      let entries = 0;
+      course.chapters.forEach((chapter) => {
+        chapter.course_chapter_entries.forEach((entry) => {
+          if (entry.completed.get()) entries++;
+        });
+      });
+      completedEntries.set(entries);
+      let totalEntries = course.chapters.reduce(
+        (acc, chapter) => acc + chapter.course_chapter_entries.length,
+        0
       );
-      percentage.set(
-        isNaN(
-          Math.round((completedChapters.get() / course.chapters.length) * 100)
-        )
-          ? 0
-          : Math.round((completedChapters.get() / course.chapters.length) * 100)
-      );
+      percentage.set(isNaNor((completedEntries.get() / totalEntries) * 100, 0));
       isCompleted.set(percentage.get() >= 100);
     });
 
@@ -68,18 +71,27 @@ const ProgressDropdown = observer(
             <AccordionContent className="flex flex-col ml-4 md:ml-8 space-y-4">
               {course.chapters.map((chapter, index) => {
                 return (
-                  <Link
-                    href="#"
-                    key={index}
-                    className="flex gap-3 items-center hover:opacity-80 transition-opacity duration-200"
-                  >
-                    {chapter.completed.get() ? (
-                      <IconCircleCheckFilled size={20} />
-                    ) : (
-                      <IconCircleDotted size={20} />
-                    )}
-                    {chapter.title.get()}
-                  </Link>
+                  <section key={index} className="flex flex-col space-y-2">
+                    <h3 className="font-medium ml-1">{chapter.title.get()}</h3>
+                    <section className="ml-2 md:ml-4 flex flex-col space-y-4">
+                      {chapter.course_chapter_entries.map((entry, index) => {
+                        return (
+                          <Link
+                            href="#"
+                            key={index}
+                            className="flex gap-3 items-center hover:opacity-80 transition-opacity duration-200"
+                          >
+                            {entry.completed.get() ? (
+                              <IconCircleCheckFilled size={20} />
+                            ) : (
+                              <IconCircleDotted size={20} />
+                            )}
+                            {entry.title.get()}
+                          </Link>
+                        );
+                      })}
+                    </section>
+                  </section>
                 );
               })}
             </AccordionContent>

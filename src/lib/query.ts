@@ -12,8 +12,12 @@ export const qsChapterEntry = () => {
 
 export const qsCoursesWithChapters = () => {
   return qs.stringify({
-    populate: "*",
-    sort: "id:asc",
+    populate: {
+      course_chapters: {
+        populate: "*",
+      },
+    },
+    sort: "course_order:asc",
   });
 };
 

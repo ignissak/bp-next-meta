@@ -28,9 +28,13 @@ const ProgressPage = observer(
       courses$.map((course) => {
         if (!course.chapters) return course;
         course.chapters.map((chapter) => {
-          chapter.completed.set(
-            progress.some((p) => p.entryId === chapter.documentId.get())
-          );
+          chapter.course_chapter_entries.map((entry) => {
+            let entryCompleted = progress.some(
+              (p) => p.entryId === entry.documentId.get()
+            );
+            entry.completed.set(entryCompleted);
+            return entry;
+          });
           return chapter;
         });
         console.log(course.chapters.get());
@@ -41,17 +45,32 @@ const ProgressPage = observer(
     return (
       <main className="container mx-auto min-h-screen">
         <section className="pt-16 md:pt-32 pb-8">
-          {/* <Button
-            onClick={async () => {
-              await store$.setProgress(
-                "jenm3vn2xjj22kq88hcf51ov",
-                "lq95xqgqoj1nrtbzi9z923dp"
-              );
-              console.log(store$.progress.get());
-            }}
-          >
-            Insert first progress
-          </Button> */}
+          {process.env.NEXT_PUBLIC_DEBUG === "true" && (
+            <section className="flex gap-4 mb-4">
+              <Button
+                onClick={async () => {
+                  await store$.setProgress(
+                    "jenm3vn2xjj22kq88hcf51ov",
+                    "f1ot08rosbys13p4575nm0mt"
+                  );
+                  console.debug(store$.progress.get());
+                }}
+              >
+                Debug: Insert 1st progress
+              </Button>
+              <Button
+                onClick={async () => {
+                  await store$.deleteLocalProgress(
+                    "jenm3vn2xjj22kq88hcf51ov",
+                    "f1ot08rosbys13p4575nm0mt"
+                  );
+                  console.debug(store$.progress.get());
+                }}
+              >
+                Debug: Delete 1st progress
+              </Button>
+            </section>
+          )}
           <ProgressHeading />
           {courses$.map((course, index) => (
             <ProgressDropdown key={index} index={index} course={course} />
