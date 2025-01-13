@@ -8,8 +8,6 @@ import rehypeHighlight from "rehype-highlight";
 import Quiz from "./quiz";
 import CourseChapterNav from "./ui/course-chapter-nav";
 import { ToastAction } from "./ui/toast";
-import { shuffleOptions } from "@/lib/utils";
-import { QuizOptions } from "@/lib/types";
 
 const LearnPage = observer(
   ({
@@ -84,9 +82,7 @@ const LearnPage = observer(
               </section>
             </aside>
             <section id="course-content" className="flex flex-col gap-4">
-              <h2 className="text-lg font-semibold">
-                {entry.title.get()}
-              </h2>
+              <h2 className="text-lg font-semibold">{entry.title.get()}</h2>
               {entry.dynamic.get().map((comp: any) => {
                 if (comp.__component === "shared.rich-text") {
                   return (
