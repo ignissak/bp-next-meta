@@ -3,6 +3,7 @@
 import prisma from "./lib/prisma";
 import {
   qsChapterEntry,
+  qsCourseEntriesContent,
   qsCoursesWithChapters,
   qsEntriesInCourse,
 } from "./lib/query";
@@ -80,6 +81,9 @@ export const getEntryInCourse = async (entryId: string) => {
   return await response.json();
 };
 
+/**
+ *
+ */
 export const getAllEntriesInCourse = async (courseId: string) => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
@@ -87,6 +91,24 @@ export const getAllEntriesInCourse = async (courseId: string) => {
       courseId +
       "?" +
       qsEntriesInCourse(),
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+    }
+  );
+  return await response.json();
+};
+
+export const getCourseAllContent = async (courseId: string) => {
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
+      "/api/courses/" +
+      courseId +
+      "?" +
+      qsCourseEntriesContent(),
     {
       method: "GET",
       headers: {

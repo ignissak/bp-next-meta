@@ -13,7 +13,6 @@ export const snakeCase = (input: string) => {
     .join("_");
 };
 
-
 export const isNaNor = (value: any, fallback: any) => {
   return isNaN(value) ? fallback : value;
-}
+};
