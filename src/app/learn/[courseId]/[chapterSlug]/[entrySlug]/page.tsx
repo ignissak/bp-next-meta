@@ -1,4 +1,5 @@
 import { getCourseAllContent } from "@/actions";
+import { auth } from "@/auth";
 import LearnPage from "@/components/learn-page";
 
 const LearnEntryPage = async ({
@@ -10,6 +11,8 @@ const LearnEntryPage = async ({
   const chapterSlug = (await params).chapterSlug;
   const entrySlug = (await params).entrySlug;
   const content = await getCourseAllContent(courseId);
+  const session = await auth();
+  const userId = session?.user?.id;
 
   return (
     <>
@@ -18,6 +21,7 @@ const LearnEntryPage = async ({
         chapterSlug={chapterSlug}
         entrySlug={entrySlug}
         content={content}
+        userId={userId}
       />
     </>
   );

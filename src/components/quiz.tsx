@@ -4,14 +4,22 @@ import { IQuiz } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { observer, useObservable } from "@legendapp/state/react";
 import { IconSquare, IconSquareCheck, IconSquareX } from "@tabler/icons-react";
+import { motion } from "motion/react";
 
 const Quiz: React.FC<IQuiz> = observer(
-  ({ id, title, subtitle, options, type }) => {
+  ({ id, title, subtitle, options, type, onComplete }) => {
     const clickedOptions$ = useObservable([] as string[]);
+    const completed$ = useObservable(false);
 
     const handleClickOption = (key: string) => {
-      console.log("Clicked option", key);
+      if (completed$.get()) return;
+      console.debug("Clicked option", key);
       clickedOptions$.push(key);
+      if (options[key].correct) {
+        console.debug(`Quiz ${id} completed`);
+        completed$.set(true);
+        onComplete?.();
+      }
     };
 
     const subtitleDOM: JSX.Element[] = [];
@@ -59,6 +67,8 @@ const Quiz: React.FC<IQuiz> = observer(
                 ? value.correct
                   ? "bg-gradient-green"
                   : "bg-gradient-red"
+                : completed$.get()
+                ? ""
                 : "cursor-pointer hover:opacity-80"
             )}
             onClick={() => {
@@ -68,12 +78,30 @@ const Quiz: React.FC<IQuiz> = observer(
             <p>{value.value}</p>
             {clickedOptions$.get().includes(key) ? (
               value.correct ? (
-                <IconSquareCheck size={20} className="text-green-600" />
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <IconSquareCheck size={20} className="text-green-600" />
+                </motion.div>
               ) : (
-                <IconSquareX size={20} className="text-red-600" />
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <IconSquareX size={20} className="text-red-600" />
+                </motion.div>
               )
             ) : (
-              <IconSquare size={20} />
+              <IconSquare
+                size={20}
+                className={`${
+                  completed$.get() &&
+                  "text-neutral-600 transition-colors duration-300"
+                }`}
+              />
             )}
           </section>
         ))}

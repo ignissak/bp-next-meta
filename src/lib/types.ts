@@ -37,4 +37,5 @@ export interface IQuiz {
   subtitle?: string;
   options: QuizOptions;
   type: "abcd" | "fill";
+  onComplete?: () => void;
 }

@@ -1,7 +1,12 @@
 "use client";
 
 import { toast } from "@/hooks/use-toast";
-import { observer, useObservable } from "@legendapp/state/react";
+import { store$ } from "@/lib/store";
+import {
+  observer,
+  useObservable,
+  useObserveEffect,
+} from "@legendapp/state/react";
 import { useRouter } from "next/navigation";
 import Markdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
@@ -15,11 +20,13 @@ const LearnPage = observer(
     chapterSlug,
     entrySlug,
     content,
+    userId,
   }: {
     courseId: string;
     chapterSlug: string;
     entrySlug: string;
     content: any;
+    userId?: string;
   }) => {
     const router = useRouter();
     try {
@@ -56,6 +63,26 @@ const LearnPage = observer(
         ?.course_chapter_entries.find((entry: any) => entry.slug === entrySlug)
     );
     console.debug(entry.get());
+
+    const quizesIds: number[] = entry.dynamic
+      .get()
+      .filter((comp: any) => comp.__component === "shared.quiz")
+      .map((comp: any) => comp.id);
+    let quizesComplete = useObservable([] as number[]);
+
+    useObserveEffect(quizesComplete, (val) => {
+      console.log(val.value, quizesIds.toSorted());
+      if (val.value?.values().every((id) => quizesIds.includes(id))) {
+        console.log("All quizes complete");
+        toast({
+          title: "Congratulations!",
+          description: "You have completed all quizes in this chapter.",
+        });
+        // TODO: Add progress
+        store$.setProgress(courseId, entry.documentId, userId);
+      }
+    });
+
     return (
       <>
         <main className="container relative mx-auto min-h-screen">
@@ -107,10 +134,18 @@ const LearnPage = observer(
                   return (
                     <div key={comp.id}>
                       <Quiz
+                        id={comp.id}
                         title={comp.title}
                         subtitle={comp.subtitle}
                         type={comp.type}
                         options={comp.options}
+                        onComplete={() => {
+                          quizesComplete.set([
+                            ...quizesComplete.get(),
+                            comp.id,
+                          ]);
+                          console.log(quizesComplete.get());
+                        }}
                       />
                     </div>
                   );
