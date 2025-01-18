@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "motion/react";
 
 const CourseListHeading = () => {
@@ -7,7 +8,7 @@ const CourseListHeading = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className="font-semibold text-xl text-glow mb-8 text-center"
+      className="font-semibold text-xl mb-8 text-center"
     >
       Courses
     </motion.h2>

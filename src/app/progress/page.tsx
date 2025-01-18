@@ -15,8 +15,8 @@ const page = async () => {
   const userId = session?.user?.id;
   return (
     <>
-    { JSON.stringify((await store$.getProgress()).get())}
-    <ProgressPage courses={courses} /></>
+      <ProgressPage courses={courses} />
+    </>
   );
 };
 

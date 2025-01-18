@@ -26,7 +26,7 @@ const glossaryPage = function Page({ glossary }: { glossary: Glossary[] }) {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="font-bold text-lg text-glow mb-1">Glossary</h1>
+          <h1 className="font-bold text-lg mb-1">Glossary</h1>
           <p className="">
             On this page you can review all important AI and Machine Learning
             terms.

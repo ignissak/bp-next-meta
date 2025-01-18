@@ -1,4 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
+import { motion } from "motion/react";
+import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -12,3 +14,5 @@ export const snakeCase = (input: string) => {
     .map((word) => word.toLowerCase())
     .join("_");
 };
+
+export const MotionLink = motion.create(Link);

@@ -13,7 +13,7 @@ const LoggedInPage = ({ user }: { user: User }) => {
         initial={{ opacity: 0, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-xl font-semibold text-glow mb-1">Account</h2>
+        <h2 className="text-xl font-semibold mb-1">Account</h2>
         <p className="mb-4 max-w-prose">
           You are currently logged in as {user.name} ({user.email})
         </p>
@@ -24,7 +24,7 @@ const LoggedInPage = ({ user }: { user: User }) => {
             signOut();
           }}
         >
-          <IconLogout className="icon-glow" />
+          <IconLogout />
           Sign out
         </Button>
       </motion.div>

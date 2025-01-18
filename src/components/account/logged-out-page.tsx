@@ -17,7 +17,7 @@ const LoggedOutPage = observer(() => {
         initial={{ opacity: 0, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-xl font-semibold text-glow mb-1">Account</h2>
+        <h2 className="text-xl font-semibold mb-1">Account</h2>
         <p>
           You can freely learn without logging in, but you will not be able to:
         </p>
@@ -36,12 +36,12 @@ const LoggedOutPage = observer(() => {
         >
           {loadingSign$.get() ? (
             <>
-              <IconLoader className="animate-spin icon-glow" />
+              <IconLoader className="animate-spin" />
               Please wait...
             </>
           ) : (
             <>
-              <IconBrandGithub className="icon-glow" />
+              <IconBrandGithub  />
               Login with GitHub
             </>
           )}

@@ -1,11 +1,13 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn, MotionLink } from "@/lib/utils";
 import { observable } from "@legendapp/state";
 import { observer, useMount } from "@legendapp/state/react";
 import { IconMenu } from "@tabler/icons-react";
+import clsx from "clsx";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import {
   Drawer,
   DrawerContent,
@@ -36,6 +38,49 @@ export const HomepageNavBar = observer(() => {
 
   // get link query or path
   const path = usePathname();
+  const getCurrentTab = () => {
+    if (path === "/" && hash$.get() === "#courses") {
+      return "courses";
+    }
+    if (path.startsWith("/glossary")) {
+      return "glossary";
+    }
+    if (path.startsWith("/progress")) {
+      return "progress";
+    }
+    if (path.startsWith("/account")) {
+      return "account";
+    }
+    return null;
+  };
+  const [activeTab, setActiveTab] = useState<string | null>(getCurrentTab());
+
+  const tabs = [
+    {
+      title: "Browse courses",
+      tab: "courses",
+      href: "/#courses",
+      active: path === "/" && hash$.get() === "#courses",
+    },
+    {
+      title: "Glossary",
+      tab: "glossary",
+      href: "/glossary",
+      active: path.startsWith("/glossary"),
+    },
+    {
+      title: "Your progress",
+      tab: "progress",
+      href: "/progress",
+      active: path.startsWith("/progress"),
+    },
+    {
+      title: "Account",
+      tab: "account",
+      href: "/account",
+      active: path.startsWith("/account"),
+    },
+  ];
 
   return (
     <motion.section
@@ -51,11 +96,42 @@ export const HomepageNavBar = observer(() => {
       <div className="flex items-center justify-between container my-4 mx-auto relative z-50">
         <Link
           href="/"
-          className="font-semibold text-base hover:text-glow transition-all duration-200"
+          className="font-medium text-bg-transparent"
         >
           Learn AI
         </Link>
-        <NavigationMenu className="hidden md:flex">
+        <ul
+          //onMouseLeave={() => setActiveTab(activeTabComputed.peek())}
+          className="flex items-center justify-center gap-12 font-medium text-base"
+        >
+          {/* TODO: FIX: Navigating from/to homepage does weird animation */}
+          {tabs.map((tab) => (
+            <MotionLink
+              layout
+              key={tab.tab}
+              href={tab.href}
+              scroll={false}
+              passHref
+              shallow={tab.href === "/#courses"}
+              tabIndex={0}
+              onMouseOver={() => setActiveTab(tab.tab)}
+              onFocus={() => setActiveTab(tab.tab)}
+              className={clsx(
+                "relative outline-none py-2.5 px-5 transition-all active:scale-[.97]",
+                activeTab === tab.tab ? "text-neutral-100" : "text-neutral-400"
+              )}
+            >
+              {activeTab === tab.tab ? (
+                <motion.div
+                  layoutId="highlight"
+                  className="absolute inset-0 rounded-lg backdrop-blur bg-neutral-900/50 z-0"
+                />
+              ) : null}
+              <span className="relative text-inherit">{tab.title}</span>
+            </MotionLink>
+          ))}
+        </ul>
+        {/* <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link href="/#courses" passHref legacyBehavior>
@@ -98,7 +174,7 @@ export const HomepageNavBar = observer(() => {
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
-        </NavigationMenu>
+        </NavigationMenu> */}
         <Drawer
           preventScrollRestoration={true}
           noBodyStyles
