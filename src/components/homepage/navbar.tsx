@@ -1,13 +1,12 @@
 "use client";
 import { cn, MotionLink } from "@/lib/utils";
-import { observable } from "@legendapp/state";
-import { observer, useMount } from "@legendapp/state/react";
+import { observer, useMount, useObservable } from "@legendapp/state/react";
 import { IconMenu } from "@tabler/icons-react";
 import clsx from "clsx";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Drawer,
   DrawerContent,
@@ -24,10 +23,10 @@ import {
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 
-const isScrolled$ = observable(false);
-const hash$ = observable("");
-
 export const HomepageNavBar = observer(() => {
+  const isScrolled$ = useObservable(false);
+  const hash$ = useObservable("");
+  const path = usePathname();
   useMount(() => {
     isScrolled$.set(window.scrollY > 100);
     window.addEventListener("scroll", () => {
@@ -36,10 +35,16 @@ export const HomepageNavBar = observer(() => {
     hash$.set(window.location.hash);
   });
 
+  useEffect(() => {
+    const tab = tabs.find((tab) => path === tab.href);
+    if (tab) {
+      setActiveTab(tab.tab);
+    }
+  }, [path]);
+
   // get link query or path
-  const path = usePathname();
   const getCurrentTab = () => {
-    if (path === "/" && hash$.get() === "#courses") {
+    if (path === "/") {
       return "courses";
     }
     if (path.startsWith("/glossary")) {
@@ -57,28 +62,24 @@ export const HomepageNavBar = observer(() => {
 
   const tabs = [
     {
-      title: "Browse courses",
+      title: "Homepage",
       tab: "courses",
-      href: "/#courses",
-      active: path === "/" && hash$.get() === "#courses",
+      href: "/",
     },
     {
       title: "Glossary",
       tab: "glossary",
       href: "/glossary",
-      active: path.startsWith("/glossary"),
     },
     {
       title: "Your progress",
       tab: "progress",
       href: "/progress",
-      active: path.startsWith("/progress"),
     },
     {
       title: "Account",
       tab: "account",
       href: "/account",
-      active: path.startsWith("/account"),
     },
   ];
 
@@ -94,17 +95,13 @@ export const HomepageNavBar = observer(() => {
       }
     >
       <div className="flex items-center justify-between container my-4 mx-auto relative z-50">
-        <Link
-          href="/"
-          className="font-medium text-bg-transparent"
-        >
+        <Link href="/" className="font-medium text-bg-transparent">
           Learn AI
         </Link>
         <ul
-          //onMouseLeave={() => setActiveTab(activeTabComputed.peek())}
+          onMouseLeave={() => setActiveTab(getCurrentTab())}
           className="flex items-center justify-center gap-12 font-medium text-base"
         >
-          {/* TODO: FIX: Navigating from/to homepage does weird animation */}
           {tabs.map((tab) => (
             <MotionLink
               layout
@@ -112,10 +109,10 @@ export const HomepageNavBar = observer(() => {
               href={tab.href}
               scroll={false}
               passHref
-              shallow={tab.href === "/#courses"}
               tabIndex={0}
               onMouseOver={() => setActiveTab(tab.tab)}
               onFocus={() => setActiveTab(tab.tab)}
+              onClick={() => setActiveTab(tab.tab)}
               className={clsx(
                 "relative outline-none py-2.5 px-5 transition-all active:scale-[.97]",
                 activeTab === tab.tab ? "text-neutral-100" : "text-neutral-400"
@@ -125,9 +122,10 @@ export const HomepageNavBar = observer(() => {
                 <motion.div
                   layoutId="highlight"
                   className="absolute inset-0 rounded-lg backdrop-blur bg-neutral-900/50 z-0"
+                  style={{ originY: "0px" }}
                 />
               ) : null}
-              <span className="relative text-inherit">{tab.title}</span>
+              <span className="relative text-inherit z-50">{tab.title}</span>
             </MotionLink>
           ))}
         </ul>
