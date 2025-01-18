@@ -16,3 +16,7 @@ export const snakeCase = (input: string) => {
 };
 
 export const MotionLink = motion.create(Link);
+
+export const isNaNor = (value: any, fallback: any) => {
+  return isNaN(value) ? fallback : value;
+};

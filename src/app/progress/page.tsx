@@ -1,7 +1,8 @@
+import { getCoursesWithChapters, getUserProgress } from "@/actions";
 import { auth } from "@/auth";
 import ProgressPage from "@/components/progress-page";
-import { store$ } from "@/lib/store";
 import { Course } from "@/lib/types";
+import { Progress } from "@prisma/client";
 
 export const metadata = {
   title: "Your progress",
@@ -10,12 +11,16 @@ export const metadata = {
 };
 
 const page = async () => {
-  const courses: Partial<Course>[] = store$.getCourses.get();
+  const courses: Partial<Course>[] = await getCoursesWithChapters();
   const session = await auth();
   const userId = session?.user?.id;
+  let progress: Partial<Progress>[] | undefined;
+  if (userId) {
+    progress = await getUserProgress(userId);
+  }
   return (
     <>
-      <ProgressPage courses={courses} />
+      <ProgressPage _courses={courses} userId={userId} _progress={progress} />
     </>
   );
 };

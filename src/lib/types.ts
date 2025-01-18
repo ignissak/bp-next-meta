@@ -13,7 +13,15 @@ export interface CourseChapter {
   documentId: string;
   title: string;
   slug: string;
-  completed?: boolean;
+  course_chapter_entries: CourseChapterEntry[];
+}
+
+export interface CourseChapterEntry {
+  documentId: string;
+  title: string;
+  slug: string;
+  type: "study" | "quiz" | "code";
+  completed: boolean;
 }
 
 export interface QuizOptions {
