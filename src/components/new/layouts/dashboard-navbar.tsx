@@ -1,11 +1,24 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { MotionLink } from "@/lib/utils";
 import { observer, useObservable } from "@legendapp/state/react";
 import { IconLoader } from "@tabler/icons-react";
-import { AnimatePresence, motion } from "motion/react";
-import { useSession } from "next-auth/react";
+import clsx from "clsx";
+import { motion } from "motion/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 export type DashboardNavbarItem = {
   title: string;
@@ -15,7 +28,7 @@ export type DashboardNavbarItem = {
 const loginButtonStates = {
   loading: (
     <>
-      <IconLoader className="animate-spin inline mr-2" />
+      <IconLoader className="inline mr-1 animate-spin" />
       Please wait...
     </>
   ),
@@ -25,56 +38,133 @@ const loginButtonStates = {
 const DashboardNavbar = observer(
   ({ items }: { items: DashboardNavbarItem[] }) => {
     const { data: session } = useSession();
-    const $loginLoading = useObservable(false);
-    const [loginButtonState, setLoginButtonState] = useState<keyof typeof loginButtonStates>("default");
+    const path = usePathname();
+    const $loginButtonState =
+      useObservable<keyof typeof loginButtonStates>("default");
+    const $hoverItem = useObservable<string | null>(null);
+    const $activeItem = useObservable<string | null>(null);
+
+    // listen to location changes
+    useEffect(() => {
+      const item = items.find((item) => path.startsWith(item.href));
+      if (item) {
+        $activeItem.set(item.title);
+      } else {
+        $activeItem.set(null);
+      }
+    }, [path]);
 
     return (
       <>
-        <div className="px-8 flex items-center justify-between pt-4 relative z-50">
-          <Link href="/" className="text-xl font-semibold">
-            Learn AI
-          </Link>
-          <div className="flex items-center justify-center gap-5">
-            <div>
-              <Button variant="outline">Submit feedback</Button>
-            </div>
-            <div>
-              {session ? (
-                <></>
-              ) : (
-                <>
-                  <Button
-                    className="w-36"
-                    disabled={$loginLoading.get()}
-                    onClick={() => {
-                      // $loginLoading.set(true);
-                      // //signIn("github");
-                      // setTimeout(() => $loginLoading.set(false), 2000);
-                      setLoginButtonState("loading");
-
-                      setTimeout(() => setLoginButtonState("default"), 2000);
-                    }}
-                  >
-                    <AnimatePresence mode="popLayout" initial={false}>
-                      <motion.span
-                        transition={{
-                          type: "spring",
-                          duration: 1,
-                          bounce: 0,
-                        }}
-                        initial={{ opacity: 0, y: -32 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 32 }}
-                      >
-                        {loginButtonStates[loginButtonState]}
-                      </motion.span>
-                    </AnimatePresence>
-                  </Button>
-                </>
-              )}
+        <nav className="flex flex-col gap-3">
+          <div
+            id="upperNav"
+            className="relative z-50 flex items-center justify-between w-screen px-8 pt-4"
+          >
+            <Link href="/" className="text-xl font-semibold">
+              Learn AI
+            </Link>
+            <div className="flex items-center justify-center gap-5">
+              <div>
+                <Button variant="outline">Feedback</Button>
+              </div>
+              <div>
+                {session ? (
+                  <>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="active:scale-[.97]">
+                        <div className="flex justify-center items-center gap-3 hover:bg-neutral-800 px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-200">
+                          <p className="font-medium text-neutral-100">
+                            {session.user!!.name!!}
+                          </p>
+                          <Image
+                            src={session.user!!.image!!}
+                            className="rounded-lg"
+                            alt="Profile picture"
+                            width={24}
+                            height={24}
+                          />
+                        </div>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-40">
+                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={() => {
+                            signOut();
+                          }}
+                        >
+                          Log out
+                          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      className="w-36"
+                      disabled={$loginButtonState.get() === "loading"}
+                      onClick={() => {
+                        $loginButtonState.set("loading");
+                        signIn("github");
+                      }}
+                    >
+                      {loginButtonStates[$loginButtonState.get()]}
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+          <div
+            id="bottomNav"
+            className="w-full px-8 py-1.5 bg-neutral-925 flex items-center justify-between"
+          >
+            <div
+              className="flex items-center gap-2"
+              onMouseLeave={() => $hoverItem.set(null)}
+            >
+              {items.map((item, index) => (
+                <MotionLink
+                  layout
+                  key={index}
+                  href={item.href}
+                  passHref
+                  tabIndex={0}
+                  onMouseOver={() => $hoverItem.set(item.title)}
+                  onFocus={() => $hoverItem.set(item.title)}
+                  onClick={() => $hoverItem.set(item.title)}
+                  className={clsx(
+                    "relative outline-none px-5 py-1.5 transition-all active:scale-[.97] font-medium",
+                    $hoverItem.get() === item.title ||
+                      $activeItem.get() === item.title
+                      ? "text-neutral-100"
+                      : "text-neutral-400"
+                  )}
+                >
+                  {$hoverItem.get() === item.title && (
+                    <motion.div
+                      layoutId="hoverItem"
+                      className="absolute inset-0 rounded-lg backdrop-blur bg-neutral-900 z-0"
+                      style={{ originY: "0px" }}
+                    ></motion.div>
+                  )}
+                  <span className="relative text-inherit z-50">
+                    {item.title}
+                  </span>
+                  {$activeItem.get() === item.title && (
+                    <motion.div
+                      layoutId="activeItem"
+                      className="absolute left-0 -bottom-1.5 rounded-lg backdrop-blur h-[2px] w-full bg-neutral-100 z-0"
+                      style={{ originY: "0px" }}
+                    ></motion.div>
+                  )}
+                </MotionLink>
+              ))}
+            </div>
+          </div>
+        </nav>
       </>
     );
   }

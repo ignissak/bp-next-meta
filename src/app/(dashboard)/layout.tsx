@@ -7,6 +7,25 @@ export const metadata: Metadata = {
   description: "",
 };
 
+const items = [
+  {
+    title: "Courses",
+    href: "/courses",
+  },
+  {
+    title: "Glossary",
+    href: "/glossary",
+  },
+  {
+    title: "Resources",
+    href: "/resources",
+  },
+  {
+    title: "Homepage",
+    href: "/",
+  },
+];
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -14,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <DashboardNavbar items={[]} />
+      <DashboardNavbar items={items} />
       {children}
     </>
   );

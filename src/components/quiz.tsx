@@ -99,7 +99,7 @@ const Quiz: React.FC<IQuiz> = observer(
                 size={20}
                 className={`${
                   completed$.get() &&
-                  "text-neutral-600 transition-colors duration-300"
+                  "text-neutral-600 transition-colors duration-200"
                 }`}
               />
             )}

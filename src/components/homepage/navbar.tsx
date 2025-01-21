@@ -90,7 +90,7 @@ export const HomepageNavBar = observer(() => {
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
       className={
-        cn("fixed inset-x-0 z-50 transition-all duration-300") +
+        cn("fixed inset-x-0 z-50 transition-all duration-200") +
         (isScrolled$.get() ? " backdrop-blur" : "")
       }
     >

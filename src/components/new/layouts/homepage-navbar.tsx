@@ -10,7 +10,7 @@ const HomepageNavbar = observer(({}: {}) => {
     <>
       <section
         className={cn(
-          "fixed inset-x-0 z-50 transition-all duration-300",
+          "fixed inset-x-0 z-50 transition-all duration-200",
           $scrolled.get() ? "backdrop-blur" : ""
         )}
       >
