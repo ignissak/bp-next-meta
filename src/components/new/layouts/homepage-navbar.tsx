@@ -14,7 +14,7 @@ const HomepageNavbar = observer(({}: {}) => {
           $scrolled.get() ? "backdrop-blur" : ""
         )}
       >
-        <nav className="px-8 flex items-center justify-between py-4 relative z-50">
+        <nav className="px-3 md:px-8 flex items-center justify-between py-4 relative z-50">
           <Link href="/" className="text-xl font-semibold">
             Learn AI
           </Link>

@@ -97,6 +97,10 @@ body {
     margin-left: calc((100vw - 100%)/ -2) ;
     margin-right: calc((100vw - 100%)/ -2);
   }
+  .no-scroll-bar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
   /* body::before,
   body::after {
     content: "";

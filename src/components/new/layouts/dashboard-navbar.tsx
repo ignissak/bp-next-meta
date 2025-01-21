@@ -57,16 +57,16 @@ const DashboardNavbar = observer(
 
     return (
       <>
-        <nav className="flex flex-col gap-3">
+        <nav className="flex flex-col gap-3 relative">
           <div
             id="upperNav"
-            className="relative z-50 flex items-center justify-between w-screen px-8 pt-4"
+            className="relative z-50 flex items-center justify-between w-screen px-3 md:px-8 pt-4"
           >
             <Link href="/" className="text-xl font-semibold">
               Learn AI
             </Link>
             <div className="flex items-center justify-center gap-3">
-              <div>
+              <div className="hidden md:block">
                 <FeedbackPopover />
               </div>
               <div>
@@ -75,7 +75,7 @@ const DashboardNavbar = observer(
                     <DropdownMenu>
                       <DropdownMenuTrigger className="active:scale-[.97]">
                         <div className="flex justify-center items-center gap-2 hover:bg-accent/20 px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-200">
-                          <p className="text-neutral-100">
+                          <p className="text-neutral-100 hidden md:block">
                             {session.user!!.name!!}
                           </p>
                           <Image
@@ -91,12 +91,19 @@ const DashboardNavbar = observer(
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
+                        className="block md:hidden"
+                          onClick={() => {
+                            // TODO: Implement
+                          }}
+                        >
+                          Feedback
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
                           onClick={() => {
                             signOut();
                           }}
                         >
                           Log out
-                          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -104,7 +111,7 @@ const DashboardNavbar = observer(
                 ) : (
                   <>
                     <Button
-                      className="w-36"
+                      className="md:w-36"
                       disabled={$loginButtonState.get() === "loading"}
                       onClick={() => {
                         $loginButtonState.set("loading");
@@ -120,7 +127,7 @@ const DashboardNavbar = observer(
           </div>
           <div
             id="bottomNav"
-            className="w-full px-8 py-1.5 bg-neutral-925 flex items-center justify-between"
+            className="w-screen px-3 md:px-8 py-1.5 bg-neutral-925 flex items-center justify-between relative overflow-x-auto md:overflow-visible no-scroll-bar"
           >
             <div
               className="flex items-center gap-2"
