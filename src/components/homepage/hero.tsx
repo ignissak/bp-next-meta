@@ -15,10 +15,12 @@ export const HeroHomepage = () => {
       initial={{
         background:
           "linear-gradient(180deg, rgba(10, 10, 10, 0.00) 63%, #0A0A0A 87.5%), linear-gradient(rgba(10, 10, 10, 0.75), rgba(10, 10, 10, 0)), url('./images/homepage_title.jpg') lightgray 50% / cover no-repeat",
+        opacity: 0,
       }}
       animate={{
         background:
           "linear-gradient(180deg, rgba(10, 10, 10, 0.00) 63%, #0A0A0A 87.5%), linear-gradient(rgba(10, 10, 10, 0.75), rgba(10, 10, 10, 0.75)), url('./images/homepage_title.jpg') lightgray 50% / cover no-repeat",
+        opacity: 1,
       }}
       transition={{ duration: 0.75 }}
     >
@@ -30,7 +32,7 @@ export const HeroHomepage = () => {
         className="flex items-center justify-start container mx-auto flex-grow mb-20"
       >
         <div className="flex flex-col gap-4">
-          <h1 className="font-bold text-2xl md:text-4xl text-glow max-w-[36rem]">
+          <h1 className="font-bold text-2xl md:text-4xl max-w-[36rem]">
             Unleash the power of AI—learn, code, and master machine learning
             hands-on.
           </h1>
@@ -46,9 +48,13 @@ export const HeroHomepage = () => {
                 ?.scrollIntoView({ behavior: "smooth" });
             }}
           >
-            <Button variant={"blue-primary"} className="font-semibold w-full">
+            <Button
+              variant={"blue-primary"}
+              size={"lg"}
+              className="font-semibold w-full"
+            >
               Browse courses
-              <IconArrowRight className="icon-glow" />
+              <IconArrowRight />
             </Button>
           </Link>
         </div>

@@ -152,10 +152,4 @@ body {
       transform: translateX(0);
     }
   } */
-  .text-glow {
-    text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.4);
-  }
-  .icon-glow {
-    filter: drop-shadow(0px 0px 15px rgba(255, 255, 255, 0.4));
-  }
 }

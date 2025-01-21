@@ -120,6 +120,7 @@ const LearnPage = observer(
                     </div>
                   );
                 } else if (comp.__component === "shared.media") {
+                  if (!comp.file) return <></>;
                   return (
                     <div key={comp.id}>
                       <img

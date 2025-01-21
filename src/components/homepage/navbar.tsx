@@ -1,11 +1,12 @@
 "use client";
-import { cn } from "@/lib/utils";
-import { observable } from "@legendapp/state";
-import { observer, useMount } from "@legendapp/state/react";
+import { cn, MotionLink } from "@/lib/utils";
+import { observer, useMount, useObservable } from "@legendapp/state/react";
 import { IconMenu } from "@tabler/icons-react";
+import clsx from "clsx";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   Drawer,
   DrawerContent,
@@ -22,10 +23,10 @@ import {
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 
-const isScrolled$ = observable(false);
-const hash$ = observable("");
-
 export const HomepageNavBar = observer(() => {
+  const isScrolled$ = useObservable(false);
+  const hash$ = useObservable("");
+  const path = usePathname();
   useMount(() => {
     isScrolled$.set(window.scrollY > 100);
     window.addEventListener("scroll", () => {
@@ -34,8 +35,53 @@ export const HomepageNavBar = observer(() => {
     hash$.set(window.location.hash);
   });
 
+  useEffect(() => {
+    const tab = tabs.find((tab) => path === tab.href);
+    if (tab) {
+      setActiveTab(tab.tab);
+    }
+  }, [path]);
+
   // get link query or path
-  const path = usePathname();
+  const getCurrentTab = () => {
+    if (path === "/") {
+      return "courses";
+    }
+    if (path.startsWith("/glossary")) {
+      return "glossary";
+    }
+    if (path.startsWith("/progress")) {
+      return "progress";
+    }
+    if (path.startsWith("/account")) {
+      return "account";
+    }
+    return null;
+  };
+  const [activeTab, setActiveTab] = useState<string | null>(getCurrentTab());
+
+  const tabs = [
+    {
+      title: "Homepage",
+      tab: "courses",
+      href: "/",
+    },
+    {
+      title: "Glossary",
+      tab: "glossary",
+      href: "/glossary",
+    },
+    {
+      title: "Your progress",
+      tab: "progress",
+      href: "/progress",
+    },
+    {
+      title: "Account",
+      tab: "account",
+      href: "/account",
+    },
+  ];
 
   return (
     <motion.section
@@ -49,13 +95,41 @@ export const HomepageNavBar = observer(() => {
       }
     >
       <div className="flex items-center justify-between container my-4 mx-auto relative z-50">
-        <Link
-          href="/"
-          className="font-semibold text-base hover:text-glow transition-all duration-200"
-        >
+        <Link href="/" className="font-medium text-bg-transparent">
           Learn AI
         </Link>
-        <NavigationMenu className="hidden md:flex">
+        <ul
+          onMouseLeave={() => setActiveTab(getCurrentTab())}
+          className="flex items-center justify-center gap-12 font-medium text-base"
+        >
+          {tabs.map((tab) => (
+            <MotionLink
+              layout
+              key={tab.tab}
+              href={tab.href}
+              scroll={false}
+              passHref
+              tabIndex={0}
+              onMouseOver={() => setActiveTab(tab.tab)}
+              onFocus={() => setActiveTab(tab.tab)}
+              onClick={() => setActiveTab(tab.tab)}
+              className={clsx(
+                "relative outline-none py-2.5 px-5 transition-all active:scale-[.97]",
+                activeTab === tab.tab ? "text-neutral-100" : "text-neutral-400"
+              )}
+            >
+              {activeTab === tab.tab ? (
+                <motion.div
+                  layoutId="highlight"
+                  className="absolute inset-0 rounded-lg backdrop-blur bg-neutral-900/50 z-0"
+                  style={{ originY: "0px" }}
+                />
+              ) : null}
+              <span className="relative text-inherit z-50">{tab.title}</span>
+            </MotionLink>
+          ))}
+        </ul>
+        {/* <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link href="/#courses" passHref legacyBehavior>
@@ -98,7 +172,7 @@ export const HomepageNavBar = observer(() => {
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
-        </NavigationMenu>
+        </NavigationMenu> */}
         <Drawer
           preventScrollRestoration={true}
           noBodyStyles

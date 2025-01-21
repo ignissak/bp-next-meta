@@ -8,7 +8,7 @@ const ProgressHeading = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <h1 className="font-bold text-lg text-glow mb-1">Your progress</h1>
+      <h1 className="font-bold text-lg  mb-1">Your progress</h1>
       <p className="">
         Here you can track your course progress and resume on specific parts of
         the course by clicking on their title.
