@@ -65,7 +65,7 @@ const DashboardNavbar = observer(
             <Link href="/" className="text-xl font-semibold">
               Learn AI
             </Link>
-            <div className="flex items-center justify-center gap-5">
+            <div className="flex items-center justify-center gap-3">
               <div>
                 <FeedbackPopover />
               </div>
@@ -74,8 +74,8 @@ const DashboardNavbar = observer(
                   <>
                     <DropdownMenu>
                       <DropdownMenuTrigger className="active:scale-[.97]">
-                        <div className="flex justify-center items-center gap-3 hover:bg-neutral-800 px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-200">
-                          <p className="font-medium text-neutral-100">
+                        <div className="flex justify-center items-center gap-2 hover:bg-accent/20 px-3 py-1.5 rounded-lg cursor-pointer transition-all duration-200">
+                          <p className="text-neutral-100">
                             {session.user!!.name!!}
                           </p>
                           <Image

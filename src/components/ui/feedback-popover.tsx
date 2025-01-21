@@ -72,7 +72,7 @@ const FeedbackPopover = observer(() => {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Submit feedback</DialogTitle>
+          <DialogTitle>Feedback</DialogTitle>
         </DialogHeader>
         <Form action={submit}>
           <Textarea
