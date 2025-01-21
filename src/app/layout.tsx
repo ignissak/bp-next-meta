@@ -34,7 +34,6 @@ export default function RootLayout({
             forcedTheme="dark"
             disableTransitionOnChange
           >
-            <HomepageNavbar />
             {children}
             <Toaster />
           </ThemeProvider>

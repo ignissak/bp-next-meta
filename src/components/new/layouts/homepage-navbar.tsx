@@ -2,14 +2,13 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { observer, useObservable } from "@legendapp/state/react";
-import { motion } from "motion/react";
 import Link from "next/link";
 
 const HomepageNavbar = observer(({}: {}) => {
   const $scrolled = useObservable(false);
   return (
     <>
-      <motion.section
+      <section
         className={cn(
           "fixed inset-x-0 z-50 transition-all duration-300",
           $scrolled.get() ? "backdrop-blur" : ""
@@ -27,7 +26,7 @@ const HomepageNavbar = observer(({}: {}) => {
             </li>
           </ul>
         </nav>
-      </motion.section>
+      </section>
     </>
   );
 });
