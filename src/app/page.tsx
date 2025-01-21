@@ -1,8 +1,8 @@
 "use client";
-import HomePage from "@/components/homepage";
+import Homepage from "@/components/new/pages/homepage";
 
 const App = function App() {
-  return <HomePage />;
+  return <Homepage />;
 };
 
 export default App;
