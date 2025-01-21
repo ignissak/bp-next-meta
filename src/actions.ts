@@ -12,8 +12,8 @@ import { Course, CourseChapter, CourseChapterEntry } from "./lib/types";
 export const _getCoursesWithChapters = async () => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
-      "/api/courses?" +
-      qsCoursesWithChapters(),
+    "/api/courses?" +
+    qsCoursesWithChapters(),
     {
       method: "GET",
       headers: {
@@ -66,10 +66,10 @@ export const getCoursesWithChapters = async () => {
 export const getEntryInCourse = async (entryId: string) => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
-      "/api/course-chapter-entries/" +
-      entryId +
-      "?" +
-      qsChapterEntry(),
+    "/api/course-chapter-entries/" +
+    entryId +
+    "?" +
+    qsChapterEntry(),
     {
       method: "GET",
       headers: {
@@ -87,10 +87,10 @@ export const getEntryInCourse = async (entryId: string) => {
 export const getAllEntriesInCourse = async (courseId: string) => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
-      "/api/courses/" +
-      courseId +
-      "?" +
-      qsEntriesInCourse(),
+    "/api/courses/" +
+    courseId +
+    "?" +
+    qsEntriesInCourse(),
     {
       method: "GET",
       headers: {
@@ -105,10 +105,10 @@ export const getAllEntriesInCourse = async (courseId: string) => {
 export const getCourseAllContent = async (courseId: string) => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
-      "/api/courses/" +
-      courseId +
-      "?" +
-      qsCourseEntriesContent(),
+    "/api/courses/" +
+    courseId +
+    "?" +
+    qsCourseEntriesContent(),
     {
       method: "GET",
       headers: {
@@ -149,3 +149,22 @@ export const upsertUserProgress = async (
     update: {},
   });
 };
+
+
+export const insertProgress = async (feedback: string, href: string, userId?: string, ipAddress?: string) => {
+  console.log("insertProgress", feedback, href, userId, ipAddress);
+  try {
+    await prisma.feedback.create({
+      data: {
+        userId,
+        ipAddress,
+        href,
+        feedback
+      }
+    })
+    return "success";
+  } catch (e) {
+    console.error(e);
+    return "error";
+  }
+}

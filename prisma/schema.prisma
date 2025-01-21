@@ -25,6 +25,7 @@ model User {
   edits     GlossaryEdit[]
   approvals GlossaryEditApproval[]
   progress  Progress[]
+  feedbacks Feedback[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -112,4 +113,18 @@ model Progress {
   createdAt DateTime @default(now())
 
   @@unique([userId, courseId, entryId])
+}
+
+model Feedback {
+  id Int @id @default(autoincrement())
+
+  userId    String?
+  user      User?   @relation(fields: [userId], references: [id])
+  ipAddress String?
+
+  href     String
+  feedback String @db.Text()
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }

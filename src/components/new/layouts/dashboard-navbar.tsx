@@ -9,6 +9,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import FeedbackPopover from "@/components/ui/feedback-popover";
 import { MotionLink } from "@/lib/utils";
 import { observer, useObservable } from "@legendapp/state/react";
 import { IconLoader } from "@tabler/icons-react";
@@ -28,7 +29,7 @@ export type DashboardNavbarItem = {
 const loginButtonStates = {
   loading: (
     <>
-      <IconLoader className="inline mr-1 animate-spin" />
+      <IconLoader className="inline mr-2 animate-spin" />
       Please wait...
     </>
   ),
@@ -66,7 +67,7 @@ const DashboardNavbar = observer(
             </Link>
             <div className="flex items-center justify-center gap-5">
               <div>
-                <Button variant="outline">Feedback</Button>
+                <FeedbackPopover />
               </div>
               <div>
                 {session ? (
