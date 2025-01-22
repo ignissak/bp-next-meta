@@ -1,5 +1,11 @@
-const GlossaryPage = () => {
-  return <></>;
+import GlossaryPage from "@/components/new/pages/glossary";
+
+const Glossary = () => {
+  return (
+    <>
+      <GlossaryPage />
+    </>
+  );
 };
 
-export default GlossaryPage;
+export default Glossary;
