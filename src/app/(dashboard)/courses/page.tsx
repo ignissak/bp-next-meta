@@ -1,6 +1,11 @@
-const CoursesPage = () => {
+import CoursesPage from "@/components/new/pages/courses";
 
-  return <></>
-}
+const Courses = () => {
+  return (
+    <>
+      <CoursesPage />
+    </>
+  );
+};
 
-export default CoursesPage;
+export default Courses;

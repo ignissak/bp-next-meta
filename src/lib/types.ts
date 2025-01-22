@@ -7,6 +7,7 @@ export interface Course {
   link?: string;
   chapters: CourseChapter[];
   completed?: boolean;
+  started?: boolean;
 }
 
 export interface CourseChapter {
