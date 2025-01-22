@@ -6,7 +6,6 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import FeedbackPopover from "@/components/ui/feedback-popover";
@@ -91,7 +90,7 @@ const DashboardNavbar = observer(
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                        className="block md:hidden"
+                          className="block md:hidden"
                           onClick={() => {
                             // TODO: Implement
                           }}
