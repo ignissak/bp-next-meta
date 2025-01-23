@@ -1,6 +1,6 @@
 import PageHeader from "@/components/ui/page-header";
 import prisma from "@/lib/prisma";
-import GlossaryCatalog from "./glossary/glossary-catalog";
+import GlossaryCatalog from "./glossary-catalog";
 
 const GlossaryPage = async () => {
   const glossary = await prisma.glossary.findMany({

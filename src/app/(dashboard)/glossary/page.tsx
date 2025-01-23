@@ -1,4 +1,4 @@
-import GlossaryPage from "@/components/new/pages/glossary";
+import GlossaryPage from "@/components/new/pages/glossary/glossary";
 
 const Glossary = () => {
   return (

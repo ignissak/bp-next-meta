@@ -1,10 +1,10 @@
 import { auth } from "@/auth";
 import PageHeader from "@/components/ui/page-header";
-import CourseCatalog from "./courses/course-catalog";
+import CourseCatalog from "./course-catalog";
 
 const CoursesPage = async () => {
   const session = await auth();
-  
+
   return (
     <>
       <PageHeader
