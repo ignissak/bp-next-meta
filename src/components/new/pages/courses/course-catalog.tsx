@@ -116,8 +116,7 @@ const CourseCatalog = observer(({ session }: { session: Session | null }) => {
   });
 
   useMountOnce(() => {
-    loadCourseCatalog();
-    loadProgress();
+    loadCourseCatalog().then(() => loadProgress());
   });
 
   return (
