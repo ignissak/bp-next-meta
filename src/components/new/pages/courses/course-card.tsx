@@ -4,8 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Course } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
+import Link from "next/link";
+import { useEffect } from "react";
 
 const CourseCard = ({ course }: { course: Course }) => {
+  const calculatePercentage = () => {
+    const entries = course.chapters.flatMap((c) => c.course_chapter_entries);
+    const countCompleted = entries.filter((e) => e.completed).length;
+    return Math.round((countCompleted / entries.length) * 100);
+  };
+  let percentage = calculatePercentage();
+
+  useEffect(() => {
+    percentage = calculatePercentage();
+  }, [course]);
+
   return (
     <motion.div
       key={course.documentId}
@@ -33,14 +46,25 @@ const CourseCard = ({ course }: { course: Course }) => {
           <p className="text-sm text-neutral-400">{course.description}</p>
         </div>
         <div className="flex gap-3 w-full">
-          {course.completed && <Button>Completed</Button>}
-          {course.started && !course.completed && (
-            <>
-              <Button variant="outline">0% complete</Button>
-              <Button>Continue</Button>
-            </>
+          {course.chapters.length > 0 && (
+            <Link href={course.link || ""}>
+              {course.completed && <Button>Completed</Button>}
+              {course.started && !course.completed && (
+                <>
+                  <Button className="mr-3">Continue</Button>
+                  <span className="text-sm text-neutral-400">
+                    {percentage}% complete
+                  </span>
+                </>
+              )}
+              {!course.started && !course.completed && (
+                <Button>Enroll now</Button>
+              )}
+            </Link>
           )}
-          {!course.started && !course.completed && <Button>Enroll now</Button>}
+          {course.chapters.length === 0 && (
+            <Button disabled variant="outline">Coming soon...</Button>
+          )}
         </div>
       </div>
     </motion.div>

@@ -1,7 +1,10 @@
+import { auth } from "@/auth";
 import PageHeader from "@/components/ui/page-header";
 import CourseCatalog from "./courses/course-catalog";
 
-const CoursesPage = () => {
+const CoursesPage = async () => {
+  const session = await auth();
+  
   return (
     <>
       <PageHeader
@@ -9,7 +12,7 @@ const CoursesPage = () => {
         subtitle="Lorem ipsum dolor sit amet consectetur. Dignissim tellus felis nisl duis quis."
       />
       <main className="content-container-lg w-full">
-        <CourseCatalog />
+        <CourseCatalog session={session} />
       </main>
     </>
   );
