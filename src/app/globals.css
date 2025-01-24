@@ -121,6 +121,7 @@ body {
     p {
       @apply text-neutral-200;
     }
+    /* TODO: format ul, ol, li */
   }
   /* body::before,
   body::after {

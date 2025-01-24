@@ -1,5 +1,6 @@
 "use client";
 
+import Note from "@/components/note";
 import Quiz from "@/components/quiz";
 import { ICoursePageContent, ICoursePageContentComponent } from "@/lib/types";
 import Markdown from "react-markdown";
@@ -49,9 +50,20 @@ const CoursePageContentComponent = ({
         <Quiz
           title={data.title!!}
           subtitle={data.subtitle}
-          type={data.type!!}
+          type={data.type as "abcd" | "fill"}
           options={data.options!!}
           onComplete={() => {}}
+        />
+      </div>
+    );
+  } else if (data.__component === "shared.note") {
+    return (
+      <div>
+        <Note
+          title={data.title!!}
+          body={data.body!!}
+          type={data.type!!}
+          icon={data.icon!!}
         />
       </div>
     );

@@ -51,7 +51,8 @@ export interface ICoursePageContentComponent {
   title?: string;
   subtitle?: string;
   options?: QuizOptions;
-  type?: "abcd" | "fill";
+  type?: "abcd" | "fill" | "red" | "blue" | "green" | "yellow";
+  icon?: string;
 }
 
 export interface ICoursePageContent {
