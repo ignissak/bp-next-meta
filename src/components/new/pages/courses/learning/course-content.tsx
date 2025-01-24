@@ -8,9 +8,9 @@ const CoursePageContent = ({ content }: { content: ICoursePageContent }) => {
   return (
     <section
       id="course-content"
-      className="grid grid-cols-[1fr_760px_1fr] [&>*]:col-start-2 px-6 mb-4"
+      className="lg:grid grid-cols-[1fr_760px_1fr] [&>*]:col-start-2 px-6 mb-4"
     >
-      {content.dynamic.map(
+      {content.dynamic?.map(
         (component: ICoursePageContentComponent, index: number) => (
           <CoursePageContentComponent key={index} data={component} />
         )
@@ -33,7 +33,7 @@ const CoursePageContentComponent = ({
     );
   } else if (data.__component === "shared.media") {
     return (
-      <div className="!col-start-1 col-span-3 lg:px-16 my-4 flex flex-col gap-1 items-center justify-center">
+      <div className="!col-start-1 col-span-3 lg:px-16 my-4 flex flex-col gap-1 items-center justify-center xl:!col-start-2 xl:col-span-1">
         <img
           src={process.env.NEXT_PUBLIC_STRAPI_BASE_URL + data.file?.url!!}
           className="rounded-lg"

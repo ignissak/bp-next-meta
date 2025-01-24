@@ -7,22 +7,7 @@ export interface Course {
   link?: string;
   completed?: boolean;
   started?: boolean;
-  course_chapters: CourseChapter[];
-}
-
-export interface CourseChapter {
-  documentId: string;
-  title: string;
-  slug: string;
-  course_chapter_entries: CourseChapterEntry[];
-}
-
-export interface CourseChapterEntry {
-  documentId: string;
-  title: string;
-  slug: string;
-  type: "study" | "quiz" | "code";
-  completed: boolean;
+  course_chapters: ICourseChapter[];
 }
 
 export interface QuizOptions {
@@ -74,7 +59,8 @@ export interface ICoursePageContent {
   title: string;
   slug: string;
   type: "study" | "quiz" | "code";
-  dynamic: ICoursePageContentComponent[];
+  dynamic?: ICoursePageContentComponent[];
+  completed?: boolean;
 }
 
 export interface ICourseChapter {

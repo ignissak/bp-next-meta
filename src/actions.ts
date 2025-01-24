@@ -7,7 +7,11 @@ import {
   qsCoursesWithChapters,
   qsEntriesInCourse,
 } from "./lib/query";
-import { Course, CourseChapter, CourseChapterEntry } from "./lib/types";
+import {
+  Course,
+  ICourseChapter,
+  ICoursePageContent,
+} from "./lib/types";
 
 export const _getCoursesWithChapters = async () => {
   const response = await fetch(
@@ -38,15 +42,15 @@ export const getCoursesWithChapters = async () => {
       description: document.description,
       estimateTime: document.estimateTime,
       image: process.env.NEXT_PUBLIC_STRAPI_BASE_URL + document.cover?.url,
-      course_chapters: [] as CourseChapter[],
+      course_chapters: [] as ICourseChapter[],
     };
     courses.push(course);
     for (const chapter of document.course_chapters) {
-      let chapterObj: CourseChapter = {
+      let chapterObj: ICourseChapter = {
         documentId: chapter.documentId,
         title: chapter.title,
         slug: chapter.slug,
-        course_chapter_entries: [] as CourseChapterEntry[],
+        course_chapter_entries: [] as ICoursePageContent[],
       };
       for (const chapterEntry of chapter.course_chapter_entries) {
         chapterObj.course_chapter_entries?.push({
