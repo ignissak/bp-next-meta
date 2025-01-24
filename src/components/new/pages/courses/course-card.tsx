@@ -9,7 +9,9 @@ import { useEffect } from "react";
 
 const CourseCard = ({ course }: { course: Course }) => {
   const calculatePercentage = () => {
-    const entries = course.chapters.flatMap((c) => c.course_chapter_entries);
+    const entries = course.course_chapters.flatMap(
+      (c) => c.course_chapter_entries
+    );
     const countCompleted = entries.filter((e) => e.completed).length;
     return Math.round((countCompleted / entries.length) * 100);
   };
@@ -46,7 +48,7 @@ const CourseCard = ({ course }: { course: Course }) => {
           <p className="text-sm text-neutral-400">{course.description}</p>
         </div>
         <div className="flex gap-3 w-full">
-          {course.chapters.length > 0 && (
+          {course.course_chapters.length > 0 && (
             <Link href={course.link || ""}>
               {course.completed && <Button>Completed</Button>}
               {course.started && !course.completed && (
@@ -62,8 +64,10 @@ const CourseCard = ({ course }: { course: Course }) => {
               )}
             </Link>
           )}
-          {course.chapters.length === 0 && (
-            <Button disabled variant="outline">Coming soon...</Button>
+          {course.course_chapters.length === 0 && (
+            <Button disabled variant="outline">
+              Coming soon...
+            </Button>
           )}
         </div>
       </div>

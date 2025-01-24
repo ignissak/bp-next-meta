@@ -12,8 +12,8 @@ import { Course, CourseChapter, CourseChapterEntry } from "./lib/types";
 export const _getCoursesWithChapters = async () => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
-    "/api/courses?" +
-    qsCoursesWithChapters(),
+      "/api/courses?" +
+      qsCoursesWithChapters(),
     {
       method: "GET",
       headers: {
@@ -36,9 +36,9 @@ export const getCoursesWithChapters = async () => {
       documentId: document.documentId,
       title: document.title,
       description: document.description,
-      approximateTime: document.estimateTime,
+      estimateTime: document.estimateTime,
       image: process.env.NEXT_PUBLIC_STRAPI_BASE_URL + document.cover?.url,
-      chapters: [] as CourseChapter[],
+      course_chapters: [] as CourseChapter[],
     };
     courses.push(course);
     for (const chapter of document.course_chapters) {
@@ -57,7 +57,7 @@ export const getCoursesWithChapters = async () => {
           completed: false,
         });
       }
-      course.chapters.push(chapterObj);
+      course.course_chapters.push(chapterObj);
     }
   }
   return courses;
@@ -66,10 +66,10 @@ export const getCoursesWithChapters = async () => {
 export const getEntryInCourse = async (entryId: string) => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
-    "/api/course-chapter-entries/" +
-    entryId +
-    "?" +
-    qsChapterEntry(),
+      "/api/course-chapter-entries/" +
+      entryId +
+      "?" +
+      qsChapterEntry(),
     {
       method: "GET",
       headers: {
@@ -87,10 +87,10 @@ export const getEntryInCourse = async (entryId: string) => {
 export const getAllEntriesInCourse = async (courseId: string) => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
-    "/api/courses/" +
-    courseId +
-    "?" +
-    qsEntriesInCourse(),
+      "/api/courses/" +
+      courseId +
+      "?" +
+      qsEntriesInCourse(),
     {
       method: "GET",
       headers: {
@@ -105,10 +105,10 @@ export const getAllEntriesInCourse = async (courseId: string) => {
 export const getCourseAllContent = async (courseId: string) => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
-    "/api/courses/" +
-    courseId +
-    "?" +
-    qsCourseEntriesContent(),
+      "/api/courses/" +
+      courseId +
+      "?" +
+      qsCourseEntriesContent(),
     {
       method: "GET",
       headers: {
@@ -150,8 +150,12 @@ export const upsertUserProgress = async (
   });
 };
 
-
-export const insertProgress = async (feedback: string, href: string, userId?: string, ipAddress?: string) => {
+export const insertProgress = async (
+  feedback: string,
+  href: string,
+  userId?: string,
+  ipAddress?: string
+) => {
   console.log("insertProgress", feedback, href, userId, ipAddress);
   try {
     await prisma.feedback.create({
@@ -159,13 +163,12 @@ export const insertProgress = async (feedback: string, href: string, userId?: st
         userId,
         ipAddress,
         href,
-        feedback
-      }
-    })
+        feedback,
+      },
+    });
     return "success";
   } catch (e) {
     console.error(e);
     return "error";
   }
-}
-
+};

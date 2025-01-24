@@ -1,5 +1,6 @@
 import { getCourseAllContent } from "@/actions";
 import { auth } from "@/auth";
+import CoursePage from "@/components/new/pages/courses/learning/course-page";
 
 const Learn = async ({
   params,
@@ -12,6 +13,15 @@ const Learn = async ({
   const content = await getCourseAllContent(courseId);
   const session = await auth();
   const userId = session?.user?.id;
+
+  return (
+    <CoursePage
+      content={content}
+      userId={userId}
+      entrySlug={entrySlug}
+      courseId={courseId}
+    ></CoursePage>
+  );
 };
 
 export default Learn;

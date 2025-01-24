@@ -7,8 +7,7 @@ import {
 } from "@legendapp/state/react";
 import { Glossary } from "@prisma/client";
 import { IconSearch } from "@tabler/icons-react";
-import { motion, AnimatePresence } from "motion/react";
-import CourseCard from "../courses/course-card";
+import { AnimatePresence, motion } from "motion/react";
 import GlossaryEntry from "./glossary-entry";
 
 const GlossaryCatalog = observer(({ data }: { data: Glossary[] }) => {
@@ -47,7 +46,11 @@ const GlossaryCatalog = observer(({ data }: { data: Glossary[] }) => {
         <motion.div id="catalog" className="flex flex-col gap-6">
           <AnimatePresence>
             {$filtered.map((item, index) => (
-              <GlossaryEntry term={item.term.get()} definition={item.definition.get()} key={index} />
+              <GlossaryEntry
+                term={item.term.get()}
+                definition={item.definition.get()}
+                key={index}
+              />
             ))}
           </AnimatePresence>
         </motion.div>

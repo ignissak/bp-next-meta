@@ -57,7 +57,7 @@ const CourseCatalog = observer(({ session }: { session: Session | null }) => {
       // find entry that matches one from progress, mark it as completed
       const course = $courses.get().find((c) => c.documentId === p.courseId);
       if (!course) continue;
-      const entry = course.chapters
+      const entry = course.course_chapters
         .flatMap((c) => c.course_chapter_entries)
         .find((e) => e.documentId === p.entryId);
       if (!entry) continue;
@@ -67,23 +67,23 @@ const CourseCatalog = observer(({ session }: { session: Session | null }) => {
     // check if the courses are completed fully
     for (const c of $courses) {
       // all the entries must be marked as completed
-      const entries = c.chapters.get().flatMap((c) => c.course_chapter_entries);
+      const entries = c.course_chapters.get().flatMap((c) => c.course_chapter_entries);
       const countCompleted = entries.filter((e) => e.completed).length;
       c.completed.set(countCompleted === entries.length && entries.length > 0);
       c.started.set(countCompleted > 0);
 
       // generate links
-      let firstIncompleteEntry = c.chapters
+      let firstIncompleteEntry = c.course_chapters
         .get()
         .flatMap((c) => c.course_chapter_entries)
         .find((e) => !e.completed);
       if (!firstIncompleteEntry) {
-        firstIncompleteEntry = c.chapters
+        firstIncompleteEntry = c.course_chapters
           .get()
           .flatMap((c) => c.course_chapter_entries)[0];
       }
       // find the chapter that contains the first incomplete entry
-      const chapter = c.chapters
+      const chapter = c.course_chapters
         .get()
         .find((c) =>
           c.course_chapter_entries
