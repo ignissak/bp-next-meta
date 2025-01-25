@@ -56,7 +56,7 @@ const DashboardNavbar = observer(
 
     return (
       <>
-        <header className="flex flex-col gap-3 sticky top-0 bg-neutral-950 z-50 h-28 w-screen">
+        <header className="flex flex-col gap-3 sticky top-0 bg-neutral-950 z-50 h-28">
           <div
             id="upperNav"
             className="relative z-50 flex items-center justify-between px-3 md:px-8 pt-4"
