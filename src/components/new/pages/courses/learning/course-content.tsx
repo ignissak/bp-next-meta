@@ -9,7 +9,7 @@ const CoursePageContent = ({ content }: { content: ICoursePageContent }) => {
   return (
     <section
       id="course-content"
-      className="lg:grid grid-cols-[1fr_760px_1fr] [&>*]:col-start-2 px-6 mb-4"
+      className="lg:grid grid-cols-[1fr_620px_1fr] lg:grid-cols[1fr_740px_1fr] [&>*]:col-start-2 px-6 mb-4"
     >
       {content.dynamic?.map(
         (component: ICoursePageContentComponent, index: number) => (

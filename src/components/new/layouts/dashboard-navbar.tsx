@@ -56,10 +56,10 @@ const DashboardNavbar = observer(
 
     return (
       <>
-        <nav className="flex flex-col gap-3 sticky top-0 bg-neutral-950 z-50">
+        <header className="flex flex-col gap-3 sticky top-0 bg-neutral-950 z-50 h-28 w-screen">
           <div
             id="upperNav"
-            className="relative z-50 flex items-center justify-between w-screen px-3 md:px-8 pt-4"
+            className="relative z-50 flex items-center justify-between px-3 md:px-8 pt-4"
           >
             <Link href="/" className="text-xl font-semibold">
               Learn AI
@@ -126,7 +126,7 @@ const DashboardNavbar = observer(
           </div>
           <div
             id="bottomNav"
-            className="w-screen px-3 md:px-8 py-1.5 bg-neutral-925 flex items-center justify-between relative overflow-x-auto md:overflow-visible no-scroll-bar border-b border-neutral-800 z-50"
+            className="px-3 md:px-8 py-1.5 bg-neutral-925 flex items-center justify-between relative overflow-x-auto md:overflow-visible no-scroll-bar border-b border-neutral-800 z-50"
           >
             <div
               className="flex items-center gap-2"
@@ -171,7 +171,7 @@ const DashboardNavbar = observer(
               ))}
             </div>
           </div>
-        </nav>
+        </header>
       </>
     );
   }

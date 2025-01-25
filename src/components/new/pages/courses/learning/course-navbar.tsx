@@ -17,7 +17,7 @@ const CoursePageNavbar = ({
   entrySlug: string;
 }) => {
   return (
-    <aside className="hidden lg:block sticky top-[137px] overflow-y-auto pl-8 h-screen">
+    <aside className="hidden lg:block sticky top-[calc(8.5rem)] overflow-y-auto pl-8 h-[calc(100vh-9.5rem)]">
       <h3 className="text-lg font-semibold mb-4">{content.data.title}</h3>
       <section id="course-nav" className="flex flex-col gap-4">
         {content.data.course_chapters.map((chapter: any) => (
