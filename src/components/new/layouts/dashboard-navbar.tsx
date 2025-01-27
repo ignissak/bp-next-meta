@@ -142,6 +142,7 @@ const DashboardNavbar = observer(
                   onMouseOver={() => $hoverItem.set(item.title)}
                   onFocus={() => $hoverItem.set(item.title)}
                   onClick={() => $hoverItem.set(item.title)}
+                  style={{ originY: "0px" }}
                   className={clsx(
                     "relative outline-none px-5 py-1.5 transition-all active:scale-[.97] font-medium",
                     $hoverItem.get() === item.title ||
