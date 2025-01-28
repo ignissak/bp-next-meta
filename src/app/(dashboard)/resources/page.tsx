@@ -1,5 +1,11 @@
-const ResourcesPage = () => {
-  return <></>;
+import ResourcesPage from "@/components/new/pages/resources/resources";
+
+const Resources = () => {
+  return (
+    <>
+      <ResourcesPage />
+    </>
+  );
 };
 
-export default ResourcesPage;
+export default Resources;

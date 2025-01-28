@@ -83,3 +83,12 @@ export interface IAPICourse {
   started?: boolean;
   course_chapters?: ICourseChapter[];
 }
+
+export interface Resource {
+  documentId: string;
+  title: string;
+  subtitle: string;
+  link: string;
+  category: string;
+  thumbnail: StrapiFile;
+}

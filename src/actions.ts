@@ -6,12 +6,9 @@ import {
   qsCourseEntriesContent,
   qsCoursesWithChapters,
   qsEntriesInCourse,
+  qsResources,
 } from "./lib/query";
-import {
-  Course,
-  ICourseChapter,
-  ICoursePageContent,
-} from "./lib/types";
+import { Course, ICourseChapter, ICoursePageContent } from "./lib/types";
 
 export const _getCoursesWithChapters = async () => {
   const response = await fetch(
@@ -175,4 +172,21 @@ export const insertProgress = async (
     console.error(e);
     return "error";
   }
+};
+
+export const getResources = async () => {
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
+      "/api/resources" +
+      "?" +
+      qsResources(),
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+    }
+  );
+  return await response.json();
 };
