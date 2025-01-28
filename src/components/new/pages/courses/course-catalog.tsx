@@ -1,17 +1,16 @@
 "use client";
-import { getCoursesWithChapters, getUserProgress } from "@/actions";
+import { getCoursesWithChapters } from "@/actions";
 import { Input } from "@/components/ui/input";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
-import { store$ } from "@/lib/store";
 import { Course } from "@/lib/types";
+import { loadUserProgress } from "@/lib/utils";
 import {
   observer,
   useMountOnce,
   useObservable,
   useObserveEffect,
 } from "@legendapp/state/react";
-import { Progress } from "@prisma/client";
 import { IconSearch } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "motion/react";
 import { Session } from "next-auth";
@@ -43,62 +42,9 @@ const CourseCatalog = observer(({ session }: { session: Session | null }) => {
   };
 
   const loadProgress = async () => {
-    // TODO: Implement
-    let progress: Partial<Progress>[] = [];
-    if (!session?.user) {
-      console.debug("No user detected, loading local progress...");
-      progress = store$.progress.get();
-    } else {
-      console.debug("User detected, loading progress from database...");
-      progress = await getUserProgress(session.user!!.id!!);
-    }
-    console.debug("Progress:", progress);
-    for (const p of progress) {
-      // find entry that matches one from progress, mark it as completed
-      const course = $courses.get().find((c) => c.documentId === p.courseId);
-      if (!course) continue;
-      const entry = course.course_chapters
-        .flatMap((c) => c.course_chapter_entries)
-        .find((e) => e.documentId === p.entryId);
-      if (!entry) continue;
-      entry.completed = true;
-      console.debug("Marked entry as completed:", entry);
-    }
-    // check if the courses are completed fully
-    for (const c of $courses) {
-      // all the entries must be marked as completed
-      const entries = c.course_chapters.get().flatMap((c) => c.course_chapter_entries);
-      const countCompleted = entries.filter((e) => e.completed).length;
-      c.completed.set(countCompleted === entries.length && entries.length > 0);
-      c.started.set(countCompleted > 0);
-
-      // generate links
-      let firstIncompleteEntry = c.course_chapters
-        .get()
-        .flatMap((c) => c.course_chapter_entries)
-        .find((e) => !e.completed);
-      if (!firstIncompleteEntry) {
-        firstIncompleteEntry = c.course_chapters
-          .get()
-          .flatMap((c) => c.course_chapter_entries)[0];
-      }
-      // find the chapter that contains the first incomplete entry
-      const chapter = c.course_chapters
-        .get()
-        .find((c) =>
-          c.course_chapter_entries
-            .flatMap((e) => e.documentId)
-            .includes(firstIncompleteEntry?.documentId)
-        );
-      c.link.set(
-        `/courses/${c.documentId.get()}/${chapter?.slug}/${
-          firstIncompleteEntry?.slug
-        }`
-      );
-    }
-    console.debug("Updated courses with progress:", $courses.get());
-
-    $filtered.set($courses.get());
+    const $mappedCourses = await loadUserProgress(session, $courses);
+    $courses.set($mappedCourses.get());
+    $filtered.set($mappedCourses.get());
   };
 
   useObserveEffect($search, () => {

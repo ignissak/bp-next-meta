@@ -32,7 +32,7 @@ const CoursePageNavbar = ({
                 active: entry.slug === entrySlug,
               };
             })}
-          ></CoursePageChapterNav>
+          />
         ))}
       </section>
     </aside>
