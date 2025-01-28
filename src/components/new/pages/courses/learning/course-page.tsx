@@ -45,7 +45,7 @@ const CoursePage = observer(
     });
 
     // TODO: Skeleton loader
-    if ($loading.get()) return <p>Loading</p>; 
+    if ($loading.get()) return <CoursePageLoading />;
     else if (!$entry.get().slug) return null;
 
     return (
@@ -60,5 +60,31 @@ const CoursePage = observer(
     );
   }
 );
+
+const CoursePageLoading = () => {
+  return (
+    <main className="mt-6 lg:grid lg:grid-cols-[320px_1fr]">
+      <aside className="hidden lg:block pl-8">
+        <div className="h-8 w-full mb-4 bg-neutral-800 animate-pulse rounded-lg"></div>
+        <section id="course-nav" className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <h4 className="text-base font-medium text-neutral-100">
+              <div className="h-6 w-3/4 bg-neutral-800 animate-pulse rounded-lg"></div>
+            </h4>
+            <div className="flex flex-col gap-2">
+              <div className="h-6 w-full bg-neutral-800 animate-pulse rounded-lg"></div>
+              <div className="h-6 w-full bg-neutral-800 animate-pulse rounded-lg"></div>
+              <div className="h-6 w-full bg-neutral-800 animate-pulse rounded-lg"></div>
+            </div>
+          </div>
+        </section>
+      </aside>
+      <article className="lg:grid grid-cols-[1fr_620px_1fr] lg:grid-cols[1fr_740px_1fr] [&>*]:col-start-2 px-6 mb-4">
+        <div className="w-1/2 h-8 bg-neutral-800 animate-pulse rounded-lg mb-4"></div>
+        <div className="w-full h-48 bg-neutral-800 animate-pulse rounded-lg"></div>
+      </article>
+    </main>
+  );
+};
 
 export default CoursePage;
