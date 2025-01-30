@@ -11,27 +11,30 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - bp
-      - local
   next-server:
     image: next-server
-    container_name: bp-next
+    container_name: next-server
+    depends_on:
+      - database
+    volumes:
+      - .env:/app/.env
     build:
       context: .
       dockerfile: Dockerfile
+      network: host
     ports:
       - "3000:3000"
     env_file:
       - .env
-    depends_on:
-      - database
     networks:
       - bp
+      - Strapi
 
 volumes:
   postgres_data:
 
 networks:
-  local:
-    driver: host
   bp:
     driver: bridge
+  Strapi:
+    external: true

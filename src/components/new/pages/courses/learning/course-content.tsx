@@ -42,7 +42,7 @@ const CoursePageContentComponent = observer(
       return (
         <div className="!col-start-1 col-span-3 lg:px-16 my-4 flex flex-col gap-1 items-center justify-center xl:!col-start-2 xl:col-span-1">
           <img
-            src={process.env.NEXT_PUBLIC_STRAPI_BASE_URL + data.file?.url!!}
+            src={process.env.NEXT_PUBLIC_STRAPI_PUBLIC_URL + data.file?.url!!}
             className="rounded-lg"
           />
           {data.file?.caption && (

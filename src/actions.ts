@@ -38,7 +38,7 @@ export const getCoursesWithChapters = async () => {
       title: document.title,
       description: document.description,
       estimateTime: document.estimateTime,
-      image: process.env.NEXT_PUBLIC_STRAPI_BASE_URL + document.cover?.url,
+      image: process.env.NEXT_PUBLIC_STRAPI_PUBLIC_URL + document.cover?.url,
       course_chapters: [] as ICourseChapter[],
     };
     courses.push(course);

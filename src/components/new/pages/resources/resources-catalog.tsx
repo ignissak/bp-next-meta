@@ -82,7 +82,7 @@ const ResourceCard = observer(({ data }: { data: Resource }) => {
       <div className="">
         <img
           alt={data.title}
-          src={process.env.NEXT_PUBLIC_STRAPI_BASE_URL + data.thumbnail.url}
+          src={process.env.NEXT_PUBLIC_STRAPI_PUBLIC_URL + data.thumbnail.url}
           className="max-h-40 w-full object-cover aspect-video rounded-lg"
         />
       </div>
