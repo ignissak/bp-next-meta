@@ -9,7 +9,12 @@ services:
       - POSTGRES_DB=mydb
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - bp
+      - local
   next-server:
+    image: next-server
+    container_name: bp-next
     build:
       context: .
       dockerfile: Dockerfile
@@ -19,6 +24,14 @@ services:
       - .env
     depends_on:
       - database
+    networks:
+      - bp
 
 volumes:
   postgres_data:
+
+networks:
+  local:
+    driver: host
+  bp:
+    driver: bridge
