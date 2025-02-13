@@ -23,7 +23,7 @@ export interface IQuiz {
   subtitle?: string;
   options: QuizOptions;
   type: "abcd" | "fill";
-  onComplete?: () => void;
+  onComplete?: (id?: number) => void;
 }
 
 export interface StrapiFile {
@@ -46,6 +46,7 @@ export interface StrapiFileFormat {
 }
 export interface ICoursePageContentComponent {
   __component: string;
+  id: number;
   body?: string;
   file?: StrapiFile;
   title?: string;

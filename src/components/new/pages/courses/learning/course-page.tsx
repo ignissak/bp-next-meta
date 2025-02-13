@@ -1,4 +1,5 @@
 "use client";
+import { store$ } from "@/lib/store";
 import { IAPICourse, ICoursePageContent } from "@/lib/types";
 import { loadUserProgressSingle } from "@/lib/utils";
 import { observer, useMountOnce, useObservable } from "@legendapp/state/react";
@@ -40,11 +41,16 @@ const CoursePage = observer(
       return entry;
     };
 
+    const handleCourseComplete = () => {
+      console.debug("Marking course as complete...");
+      store$.setProgress(courseId, $entry.documentId.get(), session?.user?.id);
+      return true;
+    };
+
     useMountOnce(() => {
       loadEntry();
     });
 
-    // TODO: Skeleton loader
     if ($loading.get()) return <CoursePageLoading />;
     else if (!$entry.get().slug) return null;
 
@@ -55,7 +61,10 @@ const CoursePage = observer(
           courseId={courseId}
           entrySlug={entrySlug}
         />
-        <CoursePageContent content={$entry.get()} />
+        <CoursePageContent
+          content={$entry.get()}
+          onEntryComplete={handleCourseComplete}
+        />
       </main>
     );
   }

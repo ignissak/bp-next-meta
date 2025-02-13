@@ -18,7 +18,7 @@ const Quiz: React.FC<IQuiz> = observer(
       if (options[key].correct) {
         console.debug(`Quiz ${id} completed`);
         completed$.set(true);
-        onComplete?.();
+        onComplete?.(id);
       }
     };
 
@@ -53,7 +53,7 @@ const Quiz: React.FC<IQuiz> = observer(
     });
 
     return (
-      <section className="w-full">
+      <section className="w-full pb-4">
         <section className="bg-card rounded-t-lg px-5 py-4">
           <h3 className="font-medium mb-2">{title}</h3>
           <div className="flex flex-wrap gap-[0.5ch]">{subtitleDOM}</div>
