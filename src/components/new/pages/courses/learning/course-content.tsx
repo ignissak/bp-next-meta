@@ -8,6 +8,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { toast } from "@/hooks/use-toast";
 import { ICoursePageContent, ICoursePageContentComponent } from "@/lib/types";
 import { observer, useObservable, useObserve } from "@legendapp/state/react";
 import Markdown from "react-markdown";
@@ -22,6 +23,7 @@ const CoursePageContent = observer(
   }) => {
     const $completedQuizes = useObservable(new Set<number>());
     const $canTickOff = useObservable(false);
+    const $completed = useObservable(content.completed || false);
     const quizes = content.dynamic
       ?.filter((component) => component.__component === "shared.quiz")
       .flatMap((quiz) => quiz.id);
@@ -41,7 +43,12 @@ const CoursePageContent = observer(
 
     const handleButtonComplete = () => {
       const result = onEntryComplete();
+      $completed.set(result);
       content.completed = result;
+      toast({
+        title: "Congratulations!",
+        description: "You have completed this chapter.",
+      })
     };
 
     useObserve($completedQuizes, ({ value }) => {
@@ -70,7 +77,7 @@ const CoursePageContent = observer(
           )
         )}
         <div className="flex items-center justify-end">
-          {!content.completed && (
+          {!$completed.get() && (
             <Tooltip delayDuration={200}>
               <TooltipTrigger asChild>
                 <Button
