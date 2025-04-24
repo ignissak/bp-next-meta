@@ -48,7 +48,7 @@ const CoursePageContent = observer(
       toast({
         title: "Congratulations!",
         description: "You have completed this chapter.",
-      })
+      });
     };
 
     useObserve($completedQuizes, ({ value }) => {
@@ -135,15 +135,15 @@ const CoursePageContentComponent = observer(
           )}
         </div>
       );
-    } else if (data.__component === "shared.quiz") {
+    } else if (data.__component === "quiz.quiz") {
       return (
         <div>
           <Quiz
             id={data.id}
             title={data.title!!}
-            subtitle={data.subtitle}
-            type={data.type as "abcd" | "fill"}
-            options={data.options!!}
+            subtitle={data.description}
+            requireAllCorrect={data.requireAllCorrect!!}
+            options={data.answers!!}
             onComplete={onQuizComplete}
           />
         </div>

@@ -10,19 +10,18 @@ export interface Course {
   course_chapters: ICourseChapter[];
 }
 
-export interface QuizOptions {
-  [key: string]: {
-    value: string;
-    correct: boolean;
-  };
+export interface QuizOption {
+  Id: number;
+  text: string;
+  isCorrect: boolean;
 }
 
 export interface IQuiz {
   id?: number;
   title: string;
   subtitle?: string;
-  options: QuizOptions;
-  type: "abcd" | "fill";
+  options: QuizOption[];
+  requireAllCorrect: boolean;
   onComplete?: (id?: number) => void;
 }
 
@@ -50,9 +49,10 @@ export interface ICoursePageContentComponent {
   body?: string;
   file?: StrapiFile;
   title?: string;
-  subtitle?: string;
-  options?: QuizOptions;
-  type?: "abcd" | "fill" | "red" | "blue" | "green" | "yellow";
+  description?: string;
+  answers?: QuizOption[];
+  requireAllCorrect?: boolean;
+  type?: "red" | "blue" | "green" | "yellow";
   icon?: string;
 }
 
