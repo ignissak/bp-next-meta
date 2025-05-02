@@ -32,7 +32,7 @@ const Homepage = observer(() => {
             <Link href="/courses">
               <Button>Start learning</Button>
             </Link>
-            <Button variant="outline">Why learn AI?</Button>
+            {/* <Button variant="outline">Why learn AI?</Button> */}
           </div>
         </motion.div>
       </div>

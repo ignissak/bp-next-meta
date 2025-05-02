@@ -12,10 +12,8 @@ const GlossaryPage = async () => {
   return (
     <>
       <PageHeader
-        title={"Glossary"}
-        subtitle={
-          "Lorem ipsum dolor sit amet consectetur. Dignissim tellus felis nisl duis quis."
-        }
+        title="Glossary"
+        subtitle="Explore the terms and definitions in the glossary."
       />
       <main className="content-container-lg w-full">
         <GlossaryCatalog data={glossary} />

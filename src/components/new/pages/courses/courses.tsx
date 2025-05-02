@@ -8,8 +8,8 @@ const CoursesPage = async () => {
   return (
     <>
       <PageHeader
-        title={"Course catalog"}
-        subtitle="Lorem ipsum dolor sit amet consectetur. Dignissim tellus felis nisl duis quis."
+        title="Available Courses"
+        subtitle="Explore a variety of courses tailored to your needs."
       />
       <main className="content-container-lg w-full">
         <CourseCatalog session={session} />

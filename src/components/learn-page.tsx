@@ -147,6 +147,7 @@ const LearnPage = observer(
                           ]);
                           console.log(quizesComplete.get());
                         }}
+                        requireAllCorrect={comp.requireAllCorrect}
                       />
                     </div>
                   );

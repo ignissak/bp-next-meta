@@ -20,6 +20,7 @@ export interface IQuiz {
   id?: number;
   title: string;
   subtitle?: string;
+  type?: any;
   options: QuizOption[];
   requireAllCorrect: boolean;
   onComplete?: (id?: number) => void;
