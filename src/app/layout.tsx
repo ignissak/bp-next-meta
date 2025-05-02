@@ -1,10 +1,9 @@
-import { HomepageNavBar } from "@/components/homepage/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Geist } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
 
 const geist = Geist({
   weight: ["300", "400", "500", "600", "700"],
@@ -33,7 +32,6 @@ export default function RootLayout({
             forcedTheme="dark"
             disableTransitionOnChange
           >
-            <HomepageNavBar />
             {children}
             <Toaster />
           </ThemeProvider>

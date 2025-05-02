@@ -28,3 +28,19 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 - Zod for schema validation
 - Prisma for database access
 - Legendapp/state for global state management
+
+## Docker
+
+### Building
+
+For building you have to turn on database service:
+
+```bash
+docker compose up database -d
+```
+
+Then if you run the whole compose the image should build itself:
+
+```bash
+docker compose up -d
+```

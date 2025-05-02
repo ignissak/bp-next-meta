@@ -7,18 +7,42 @@ import { IconSquare, IconSquareCheck, IconSquareX } from "@tabler/icons-react";
 import { motion } from "motion/react";
 
 const Quiz: React.FC<IQuiz> = observer(
-  ({ id, title, subtitle, options, type, onComplete }) => {
-    const clickedOptions$ = useObservable([] as string[]);
+  ({ id, title, subtitle, options, requireAllCorrect, onComplete }) => {
+    const clickedOptions$ = useObservable([] as number[]);
     const completed$ = useObservable(false);
 
-    const handleClickOption = (key: string) => {
+    const handleClickOption = (key: number) => {
       if (completed$.get()) return;
       console.debug("Clicked option", key);
       clickedOptions$.push(key);
-      if (options[key].correct) {
-        console.debug(`Quiz ${id} completed`);
-        completed$.set(true);
-        onComplete?.();
+      if (options[key].isCorrect) {
+        if (requireAllCorrect) {
+          // check if every correct option is clicked
+          const allCorrect = options.every((option, index) => {
+            if (option.isCorrect) {
+              return clickedOptions$.get().includes(index);
+            }
+            return true; // if the option is not correct, we don't care about it
+          });
+          if (allCorrect) {
+            completed$.set(true);
+            onComplete?.(id);
+          }
+        } else {
+          completed$.set(true);
+          onComplete?.(id);
+        }
+        // if (
+        //   requireAllCorrect &&
+        //   clickedOptions$.get().length ===
+        //     options.filter((option) => option.isCorrect).length
+        // ) {
+        //   completed$.set(true);
+        //   onComplete?.(id);
+        // } else {
+        //   completed$.set(true);
+        //   onComplete?.(id);
+        // }
       }
     };
 
@@ -31,10 +55,9 @@ const Quiz: React.FC<IQuiz> = observer(
         parts.forEach((part, partIndex) => {
           subtitleDOM.push(<span key={`${index}-${partIndex}`}>{part}</span>);
           if (partIndex !== parts.length - 1) {
-            Object.values(options).forEach((val) => val.value.length);
             const averageLength = Math.floor(
               Object.values(options).reduce(
-                (acc, val) => acc + val.value.length,
+                (acc, val) => acc + val.text.length,
                 0
               ) / Object.values(options).length
             );
@@ -53,18 +76,18 @@ const Quiz: React.FC<IQuiz> = observer(
     });
 
     return (
-      <section className="w-full">
+      <section className="w-full pb-4">
         <section className="bg-card rounded-t-lg px-5 py-4">
           <h3 className="font-medium mb-2">{title}</h3>
           <div className="flex flex-wrap gap-[0.5ch]">{subtitleDOM}</div>
         </section>
-        {Object.entries(options).map(([key, value]) => (
+        {options.map((value, index) => (
           <section
-            key={key}
+            key={index}
             className={cn(
               "border border-card px-5 py-4 flex items-center justify-between transition-all duration-200 last:rounded-bl-lg last:rounded-br-lg",
-              clickedOptions$.get().includes(key)
-                ? value.correct
+              clickedOptions$.get().includes(index)
+                ? value.isCorrect
                   ? "bg-gradient-green"
                   : "bg-gradient-red"
                 : completed$.get()
@@ -72,12 +95,12 @@ const Quiz: React.FC<IQuiz> = observer(
                 : "cursor-pointer hover:opacity-80"
             )}
             onClick={() => {
-              handleClickOption(key);
+              handleClickOption(index);
             }}
           >
-            <p>{value.value}</p>
-            {clickedOptions$.get().includes(key) ? (
-              value.correct ? (
+            <p>{value.text}</p>
+            {clickedOptions$.get().includes(index) ? (
+              value.isCorrect ? (
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
@@ -99,7 +122,7 @@ const Quiz: React.FC<IQuiz> = observer(
                 size={20}
                 className={`${
                   completed$.get() &&
-                  "text-neutral-600 transition-colors duration-300"
+                  "text-neutral-600 transition-colors duration-200"
                 }`}
               />
             )}

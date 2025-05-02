@@ -57,3 +57,9 @@ export const qsCourseEntriesContent = () => {
     },
   });
 };
+
+export const qsResources = () => {
+  return qs.stringify({
+    populate: ["thumbnail"],
+  });
+};

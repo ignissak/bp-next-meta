@@ -125,7 +125,7 @@ const LearnPage = observer(
                     <div key={comp.id}>
                       <img
                         src={
-                          process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
+                          process.env.NEXT_PUBLIC_STRAPI_PUBLIC_URL +
                           comp.file.url
                         }
                       ></img>
