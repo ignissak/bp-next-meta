@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import Markdown from "react-markdown";
 
 const GlossaryEntry = ({
   term,
@@ -16,7 +17,10 @@ const GlossaryEntry = ({
       transition={{ duration: 0.2 }}
     >
       <h3 className="text-base text-neutral-100">{term}</h3>
-      <p className="text-neutral-400">{definition}</p>
+      {/* <p className="text-neutral-400">{definition}</p> */}
+      <div className="md-glossary">
+        <Markdown>{definition}</Markdown>
+      </div>
     </motion.div>
   );
 };

@@ -63,3 +63,10 @@ export const qsResources = () => {
     populate: ["thumbnail"],
   });
 };
+
+
+export const qsGlossary = () => {
+  return qs.stringify({
+    sort: "term"
+  })
+}

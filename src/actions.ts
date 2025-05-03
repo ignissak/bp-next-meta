@@ -6,6 +6,7 @@ import {
   qsCourseEntriesContent,
   qsCoursesWithChapters,
   qsEntriesInCourse,
+  qsGlossary,
   qsResources,
 } from "./lib/query";
 import { Course, ICourseChapter, ICoursePageContent } from "./lib/types";
@@ -190,3 +191,20 @@ export const getResources = async () => {
   );
   return await response.json();
 };
+
+export const getGlossary = async () => {
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_STRAPI_BASE_URL +
+      "/api/glossary-items" +
+      "?" +
+      qsGlossary(),
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+    }
+  );
+  return await response.json(); 
+}

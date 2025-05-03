@@ -1,18 +1,18 @@
 "use client";
 import { Input } from "@/components/ui/input";
+import { IGlossaryItem } from "@/lib/types";
 import {
   observer,
   useObservable,
   useObserveEffect,
 } from "@legendapp/state/react";
-import { Glossary } from "@prisma/client";
 import { IconSearch } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "motion/react";
 import GlossaryEntry from "./glossary-entry";
 
-const GlossaryCatalog = observer(({ data }: { data: Glossary[] }) => {
+const GlossaryCatalog = observer(({ data }: { data: IGlossaryItem[] }) => {
   const $search = useObservable("");
-  const $filtered = useObservable([] as Glossary[]);
+  const $filtered = useObservable([] as IGlossaryItem[]);
   const $glossary = useObservable(data);
 
   useObserveEffect($search, () => {

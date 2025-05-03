@@ -1,13 +1,10 @@
+import { getGlossary } from "@/actions";
 import PageHeader from "@/components/ui/page-header";
-import prisma from "@/lib/prisma";
+import { IGlossaryItem } from "@/lib/types";
 import GlossaryCatalog from "./glossary-catalog";
 
 const GlossaryPage = async () => {
-  const glossary = await prisma.glossary.findMany({
-    orderBy: {
-      term: "asc",
-    },
-  });
+  const glossary: { data: IGlossaryItem[] } = await getGlossary();
 
   return (
     <>
@@ -16,7 +13,7 @@ const GlossaryPage = async () => {
         subtitle="Explore the terms and definitions in the glossary."
       />
       <main className="content-container-lg w-full">
-        <GlossaryCatalog data={glossary} />
+        <GlossaryCatalog data={glossary.data} />
       </main>
     </>
   );

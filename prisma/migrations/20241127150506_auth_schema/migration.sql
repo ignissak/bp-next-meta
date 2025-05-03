@@ -6,20 +6,9 @@
   - Added the required column `email` to the `User` table without a default value. This is not possible if the table is not empty.
 
 */
--- DropForeignKey
-ALTER TABLE "GlossaryEdit" DROP CONSTRAINT "GlossaryEdit_userId_fkey";
-
--- DropForeignKey
-ALTER TABLE "GlossaryEditApproval" DROP CONSTRAINT "GlossaryEditApproval_userId_fkey";
 
 -- DropForeignKey
 ALTER TABLE "Progress" DROP CONSTRAINT "Progress_userId_fkey";
-
--- AlterTable
-ALTER TABLE "GlossaryEdit" ALTER COLUMN "userId" SET DATA TYPE TEXT;
-
--- AlterTable
-ALTER TABLE "GlossaryEditApproval" ALTER COLUMN "userId" SET DATA TYPE TEXT;
 
 -- AlterTable
 ALTER TABLE "Progress" ALTER COLUMN "userId" SET DATA TYPE TEXT;
@@ -83,12 +72,6 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "GlossaryEdit" ADD CONSTRAINT "GlossaryEdit_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "GlossaryEditApproval" ADD CONSTRAINT "GlossaryEditApproval_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Progress" ADD CONSTRAINT "Progress_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

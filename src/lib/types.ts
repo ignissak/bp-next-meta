@@ -94,3 +94,9 @@ export interface Resource {
   category: string;
   thumbnail: StrapiFile;
 }
+
+export interface IGlossaryItem {
+  documentId: string;
+  term: string;
+  definition: string;
+}
