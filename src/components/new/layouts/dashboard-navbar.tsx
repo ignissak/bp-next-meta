@@ -90,14 +90,6 @@ const DashboardNavbar = observer(
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                          className="block md:hidden"
-                          onClick={() => {
-                            // TODO: Implement
-                          }}
-                        >
-                          Feedback
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
                           onClick={() => {
                             signOut();
                           }}
