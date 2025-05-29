@@ -12,7 +12,7 @@ const Note = ({
   title: string;
   body: string;
   type: string;
-  icon: string;
+  icon?: string;
 }) => {
   return (
     <div
@@ -23,7 +23,7 @@ const Note = ({
       })}
     >
       <motion.div className="gap-2 flex items-center">
-        <DynamicIcon icon={icon} />
+        {icon && <DynamicIcon icon={icon} />}
         <h5 className="font-medium text-inherit">{title}</h5>
       </motion.div>
       <div className="md">

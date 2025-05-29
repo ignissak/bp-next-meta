@@ -7,7 +7,7 @@ import {
   useObservable,
   useObserveEffect,
 } from "@legendapp/state/react";
-import Link from "next/link";
+import { env } from "next-runtime-env";
 
 const ResourcesCatalog = observer(({ data }: { data: Resource[] }) => {
   const $toggledCategory = useObservable(null as string | null);
@@ -69,6 +69,7 @@ const ResourcesCatalog = observer(({ data }: { data: Resource[] }) => {
 });
 
 const ResourceCard = observer(({ data }: { data: Resource }) => {
+  const NEXT_PUBLIC_STRAPI_PUBLIC_URL = env("NEXT_PUBLIC_STRAPI_PUBLIC_URL");
   return (
     <MotionLink
       href={data.link}
@@ -82,7 +83,7 @@ const ResourceCard = observer(({ data }: { data: Resource }) => {
       <div className="">
         <img
           alt={data.title}
-          src={process.env.NEXT_PUBLIC_STRAPI_PUBLIC_URL + data.thumbnail.url}
+          src={NEXT_PUBLIC_STRAPI_PUBLIC_URL + data.thumbnail.url}
           className="max-h-40 w-full object-cover aspect-video rounded-lg"
         />
       </div>

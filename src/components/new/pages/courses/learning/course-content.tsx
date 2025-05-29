@@ -11,6 +11,7 @@ import {
 import { toast } from "@/hooks/use-toast";
 import { ICoursePageContent, ICoursePageContentComponent } from "@/lib/types";
 import { observer, useObservable, useObserve } from "@legendapp/state/react";
+import { env } from "next-runtime-env";
 import Markdown from "react-markdown";
 
 const CoursePageContent = observer(
@@ -116,6 +117,7 @@ const CoursePageContentComponent = observer(
     data: ICoursePageContentComponent;
     onQuizComplete: (id?: number) => void;
   }) => {
+    const NEXT_PUBLIC_STRAPI_PUBLIC_URL = env("NEXT_PUBLIC_STRAPI_PUBLIC_URL");
     console.debug(data);
     if (data.__component === "shared.rich-text") {
       return (
@@ -127,7 +129,7 @@ const CoursePageContentComponent = observer(
       return (
         <div className="!col-start-1 col-span-3 lg:px-16 my-4 flex flex-col gap-1 items-center justify-center xl:!col-start-2 xl:col-span-1">
           <img
-            src={process.env.NEXT_PUBLIC_STRAPI_PUBLIC_URL + data.file?.url!!}
+            src={NEXT_PUBLIC_STRAPI_PUBLIC_URL + data.file?.url!}
             className="rounded-lg"
           />
           {data.file?.caption && (
@@ -155,7 +157,7 @@ const CoursePageContentComponent = observer(
             title={data.title!!}
             body={data.body!!}
             type={data.type!!}
-            icon={data.icon!!}
+            icon={data.icon}
           />
         </div>
       );

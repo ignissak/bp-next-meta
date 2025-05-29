@@ -7,6 +7,7 @@ import {
   useObservable,
   useObserveEffect,
 } from "@legendapp/state/react";
+import { env } from "next-runtime-env";
 import { useRouter } from "next/navigation";
 import Markdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
@@ -70,6 +71,8 @@ const LearnPage = observer(
       .map((comp: any) => comp.id);
     let quizesComplete = useObservable([] as number[]);
 
+    const NEXT_PUBLIC_STRAPI_PUBLIC_URL = env("NEXT_PUBLIC_STRAPI_PUBLIC_URL");
+
     useObserveEffect(quizesComplete, (val) => {
       console.log(val.value, quizesIds.toSorted());
       if (val.value?.values().every((id) => quizesIds.includes(id))) {
@@ -124,10 +127,7 @@ const LearnPage = observer(
                   return (
                     <div key={comp.id}>
                       <img
-                        src={
-                          process.env.NEXT_PUBLIC_STRAPI_PUBLIC_URL +
-                          comp.file.url
-                        }
+                        src={NEXT_PUBLIC_STRAPI_PUBLIC_URL + comp.file.url}
                       ></img>
                     </div>
                   );

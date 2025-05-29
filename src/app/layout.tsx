@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
+import { PublicEnvScript } from "next-runtime-env";
 import { Geist } from "next/font/google";
 import "./globals.css";
 
@@ -25,6 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="min-h-screen">
+      <head>
+        <PublicEnvScript />
+      </head>
       <body className={`${geist.className} antialiased`}>
         <SessionProvider>
           <ThemeProvider
